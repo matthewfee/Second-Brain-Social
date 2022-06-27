@@ -1,5 +1,5 @@
 // import { langCodes } from '../../constants/constants';
-
+import { useRouter } from 'next/router';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { useState, useEffect } from 'react';
 import { auth } from '../../services/firebase';
@@ -7,6 +7,8 @@ import Button from '../Button';
 
 export const Container = ({ children }) => {
   const [user, setUser] = useState({ email: '' });
+
+  const router = useRouter();
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -22,6 +24,7 @@ export const Container = ({ children }) => {
 
   const firebaseLogout = async () => {
     await signOut(auth);
+    router.push('/login');
   };
 
   let isLoggedIn = false;

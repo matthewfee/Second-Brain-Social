@@ -5,15 +5,15 @@ import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 import { DatePicker } from '../components';
 import { FileUploaderTester } from '../components/FileUploaderTester';
-import { useUser } from '../contexts/UserContext';
+import { useStateValue } from '../contexts';
 
 const Home = () => {
   // eslint-disable-next-line no-unused-vars
-  const { user, setUser } = useUser();
+  const { state, dispatch } = useStateValue();
   const router = useRouter();
 
   useEffect(() => {
-    if (!user.isAuthenticated) {
+    if (!state.user.isAuthenticated) {
       router.push('/login');
     }
   }, []);

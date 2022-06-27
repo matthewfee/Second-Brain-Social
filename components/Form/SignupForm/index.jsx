@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
+import { createUser } from '../../../services/users';
 import { Button } from '../../Button';
 import { DatePicker } from '../../DatePicker';
 import { GenderPicker } from '../../GenderPicker';
@@ -8,21 +8,28 @@ import { GenderPicker } from '../../GenderPicker';
 import { AppleExternalSignup, GoogleExternalSignup } from '../ExternalSignup';
 import { TextInput } from '../NameInput';
 import { PasswordInput } from '../PasswordInput';
-import { auth } from '../../../services/firebase';
+import { useStateValue, setUser } from '../../../contexts';
 
 export const SignupForm = ({ login }) => {
   const [email, setEmail] = useState('test@gmail.com');
   const [password, setPassword] = useState('password');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
+
+  // eslint-disable-next-line no-unused-vars
+  const { state, dispatch } = useStateValue();
+
   const router = useRouter();
 
-  const firebaseSignup = async () => {
-    try {
-      const userData = await createUserWithEmailAndPassword(auth, email, password);
-      console.log('CREATING USER', userData, email, password);
-    } catch (error) {
-      console.log(error.message);
-    }
+  const handleSignup = async () => {
+    const createdUser = await createUser({
+      email,
+      password,
+      name: 'test',
+      dateOfBirth: '12/1/2003',
+      gender: 'male',
+    });
+    dispatch(setUser(createdUser));
+    router.push('/feed');
   };
 
   return (
@@ -47,14 +54,16 @@ export const SignupForm = ({ login }) => {
         setPassword={setPasswordConfirmation}
         placeholder="Password confirmation"
       />
+      {password !== passwordConfirmation ? (
+        <div className="text-red-500">Passwords don&apos;t match</div>
+      ) : null}
       <div className="bottom-form-section flex flex-row justify-between">
         <DatePicker />
         <GenderPicker />
       </div>
       <Button
         callback={() => {
-          firebaseSignup();
-          router.push('/login');
+          handleSignup();
         }}
       >
         Sign Up
