@@ -7,22 +7,26 @@ import { GoogleExternalSignup, AppleExternalSignup } from '../ExternalSignup';
 import { Button } from '../../Button';
 import { PasswordInput } from '../PasswordInput';
 import { auth } from '../../../services/firebase';
+import { useStateValue, setUser } from '../../../contexts';
 
 export const LoginForm = ({ login }) => {
   const [email, setEmail] = useState('test@gmail.com');
   const [password, setPassword] = useState('password');
-  const [user, setUser] = useState({ email: 'NO EMAIL' });
+  // const [user, setUser] = useState({ email: 'NO EMAIL' });
+
+  const { state, dispatch } = useStateValue();
 
   const router = useRouter();
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      console.log('CURRENT USER', currentUser);
-      setUser(currentUser);
+      // console.log('CURRENT USER', currentUser);
       if (currentUser) {
-        console.log('LOGGED IN');
+        // console.log('LOGGED IN');
+        setUser(currentUser);
+        router.push('/feed');
       } else {
-        console.log('LOGGED OUT');
+        // console.log('LOGGED OUT');
       }
     });
   }, []);
@@ -30,7 +34,8 @@ export const LoginForm = ({ login }) => {
   const firebaseLogin = async () => {
     try {
       const userData = await signInWithEmailAndPassword(auth, email, password);
-      console.log('LOGGING IN', userData, email, password);
+      dispatch(setUser(userData.user));
+      router.push('/feed');
     } catch (error) {
       console.log(error.message);
     }
@@ -42,7 +47,7 @@ export const LoginForm = ({ login }) => {
         <GoogleExternalSignup login={login} />
         <AppleExternalSignup login={login} />
       </div>
-      <h1>User {user?.email}</h1>
+      <h1>User {state.user?.email}</h1>
       <div className="relative flex py-2 items-center">
         <div className="flex-grow border-t border-gray-300" />
         <span className="flex-shrink mx-4 text-gray-600">OR</span>

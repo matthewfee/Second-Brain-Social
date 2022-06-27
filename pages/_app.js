@@ -1,5 +1,5 @@
 import '../styles/globals.css';
-import UserProvider from '../contexts/UserContext';
+import UserProvider from '../contexts/StateContext';
 import { Container } from '../components';
 
 const MyApp = ({ Component, pageProps }) => (
