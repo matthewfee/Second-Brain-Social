@@ -1,6 +1,6 @@
-## Social Media Project
+## Second Brain Social Media
 
-
+A social media fullstack application built for developers.
 
 ## Technologies
 - Next.js
