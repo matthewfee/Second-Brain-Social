@@ -1,12 +1,52 @@
+import { useState } from 'react';
+import { addPost } from '../../services';
 import { Button } from '../Button';
 import { PostProfileImage } from '../PostCard/PostProfileImage';
 import { PostInput } from '../PostInput';
+import { PreviewImage } from './PreviewImage';
 
-export const CreatePost = ({ newPost }) => {
+export const CreatePost = ({ createPost, openCreatePost, closeCreatePost }) => {
+  const [newPost, setNewPost] = useState({
+    text: '',
+    image: null,
+    emotion: '',
+  });
+  const [images, setImages] = useState([]);
+  // const [videosURLS, setVideosURLS] = useState([]);
+
+  const handleTextChange = (e) => {
+    setNewPost({ ...newPost, text: e.target.value });
+  };
+
+  const handleFileInputChange = (e) => {
+    if (!e.target.files?.length) {
+      return;
+    }
+    const [uploadedFile] = e.target.files;
+    const objectURL = URL.createObjectURL(uploadedFile);
+    const imageObject = {
+      imageBlob: objectURL,
+      name: e.target.files[0].name,
+      image: e.target.files[0],
+    };
+    e.target.value = null;
+    setImages(images?.concat(imageObject));
+  };
+
+  const handleDeleteImage = (image) => {
+    const updatedImages = images.filter((i) => i.image !== image);
+    setImages(updatedImages);
+  };
+
+  const handlePost = async () => {
+    await addPost(newPost, images);
+    closeCreatePost();
+  };
+
   const headerImageSRC =
-    'photo-1651772688322-a4c82677a043?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8';
+    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGZhY2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60';
 
-  if (newPost) {
+  if (createPost) {
     return (
       <div
         className="bg-white mt-8 md:rounded-xl p-5 
@@ -55,6 +95,7 @@ export const CreatePost = ({ newPost }) => {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth={2}
+                onClick={closeCreatePost}
               >
                 <path
                   strokeLinecap="round"
@@ -68,7 +109,16 @@ export const CreatePost = ({ newPost }) => {
         <hr className="border border-gray-300" />
         <div className="flex justify-between">
           <PostProfileImage imageSRC={headerImageSRC} />
-          <PostInput />
+          <PostInput inputChange={handleTextChange} />
+        </div>
+        <div className="flex gap-2">
+          {images?.map((image) => (
+            <PreviewImage
+              key={image.name}
+              image={image.imageBlob}
+              handleDeleteImage={handleDeleteImage}
+            />
+          ))}
         </div>
         <div className="md:flex md:justify-between text-md">
           <div className="mb-4 flex items-center gap-2 hover:text-blue-500 cursor-pointer">
@@ -88,22 +138,36 @@ export const CreatePost = ({ newPost }) => {
             </svg>
             Live Video
           </div>
-          <div className="mb-4 flex items-center gap-2 hover:text-blue-500 cursor-pointer">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
+          <div>
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label
+              htmlFor="post-image"
+              className="mb-4 flex items-center gap-2 hover:text-blue-500 cursor-pointer"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
-            </svg>
-            Photo/Video
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              Photo/Video
+            </label>
+            <input
+              style={{ display: 'none' }}
+              id="post-image"
+              type="file"
+              accept="image/*,video/*"
+              name="image-file"
+              onChange={handleFileInputChange}
+            />
           </div>
           <div className="mb-4 flex items-center gap-2 hover:text-blue-500 cursor-pointer">
             <svg
@@ -123,7 +187,7 @@ export const CreatePost = ({ newPost }) => {
             Feeling
           </div>
           <div className="w-full md:w-24">
-            <Button>Post</Button>
+            <Button callback={handlePost}>Post</Button>
           </div>
         </div>
       </div>
@@ -144,7 +208,7 @@ export const CreatePost = ({ newPost }) => {
       </div>
       <div className="flex flex-row-reverse">
         <div className="w-24">
-          <Button>Post</Button>
+          <Button callback={openCreatePost}>Post</Button>
         </div>
       </div>
     </div>
