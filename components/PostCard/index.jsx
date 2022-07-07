@@ -4,7 +4,9 @@ import { PostReacted } from './PostReacted';
 import { PostReactions } from './PostReactions';
 import { PostComments } from './PostComments';
 
-export const PostCard = () => (
+export const PostCard = ({ post }) => (
+  // console.log('');
+
   <div
     className="bg-white mt-8 md:rounded-lg p-5 
     mx-4 md:mx-auto flex 
@@ -13,8 +15,11 @@ export const PostCard = () => (
     w-full max-w-[512px]
     h-auto text-gray-600"
   >
-    <PostHeader headerImageSRC="photo-1651772688322-a4c82677a043?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8" />
-    <PostImage src="photo-1652113827326-5a47fea17cf0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8" />
+    <PostHeader headerImageSRC={post.images[0]} />
+    <p className="text-gray-600">{post.text}</p>
+    <div className="flex gap-1">
+      {post.images.length >= 1 && post.images.map((image) => <PostImage src={image} />)}
+    </div>
     <PostReacted />
     <PostReactions />
     <PostComments />

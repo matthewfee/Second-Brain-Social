@@ -4,7 +4,7 @@ import { PostProfileImage } from '../PostProfileImage';
 export const PostComments = () => (
   <div className="flex items-center justify-between gap-4">
     <div className="">
-      <PostProfileImage imageSRC="photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fHByb2ZpbGV8ZW58MHx8MHx8" />
+      <PostProfileImage imageSRC="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZmFjZXN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" />
     </div>
     <div className="flex-1">
       <PostComment />
@@ -19,7 +19,7 @@ export const PostComments = () => (
         strokeWidth="1.5"
         stroke="currentColor"
         fill="none"
-        strokeWinecap="round"
+        strokewinecap="round"
         strokeLinejoin="round"
       >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />

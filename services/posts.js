@@ -1,4 +1,4 @@
-import { collection, addDoc, doc, deleteDoc, onSnapshot } from 'firebase/firestore';
+import { collection, addDoc, getDocs, doc, deleteDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage, db } from './firebase';
 
@@ -8,24 +8,32 @@ const postsColRef = collection(db, 'posts');
 // get collection data
 export const getPosts = async () => {
   try {
-    onSnapshot(postsColRef, (snapshot) => {
-      const postsList = snapshot.docs.map((snapshotDoc) => snapshotDoc.data());
-      console.log(postsList);
-      //   return cityList;
+    const posts = [];
+    const querySnapshot = await getDocs(postsColRef);
+    querySnapshot.forEach((snapshopDoc) => {
+      // doc.data() is never undefined for query doc snapshots
+      posts.push(snapshopDoc.data());
     });
+    return posts;
   } catch (error) {
-    console.log(error);
+    console.log('error in getPosts service: ', error);
+    return error;
   }
 };
 
 // get collection data
-export const addPost = async (newPost, image) => {
+export const addPost = async (newPost, images) => {
   const postToAdd = newPost;
-  const imageRef = ref(storage, `images/${image.name + new Date().toISOString()}`);
   try {
-    await uploadBytes(imageRef, image);
-    const imageDownloadPath = await getDownloadURL(imageRef);
-    const imagesPath = [imageDownloadPath];
+    const imagesPath = await Promise.all(
+      images.map(async (image) => {
+        const imageRef = ref(storage, `images/${image.name + new Date().toISOString()}`);
+        await uploadBytes(imageRef, image.image);
+        const imageDownloadPath = await getDownloadURL(imageRef);
+        return imageDownloadPath;
+      })
+    );
+    console.log('imagesPath: ', imagesPath);
     postToAdd.images = imagesPath;
     const addedPost = await addDoc(postsColRef, postToAdd);
     return addedPost;

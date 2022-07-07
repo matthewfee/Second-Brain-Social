@@ -12,12 +12,11 @@ export const Container = ({ children }) => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      console.log('CURRENT USER', currentUser);
       setUser(currentUser);
       if (currentUser) {
-        console.log('LOGGED IN');
+        // console.log('LOGGED IN');
       } else {
-        console.log('LOGGED OUT');
+        // console.log('LOGGED OUT');
       }
     });
   }, []);
