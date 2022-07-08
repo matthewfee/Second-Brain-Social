@@ -12,7 +12,7 @@ const Feed = () => {
   const [posts, setPosts] = useState();
 
   const router = useRouter();
-  console.log('state: ', state);
+
   const fetchPosts = async () => {
     const receivedPosts = await getPosts();
     setPosts(receivedPosts);
@@ -44,11 +44,13 @@ const Feed = () => {
     <>
       {state.modal.show && (
         <Modal closeModal={closeCreatePost}>
-          <CreatePost createPost closeCreatePost={closeCreatePost} />
+          <CreatePost createPost closeCreatePost={closeCreatePost} fetchPosts={fetchPosts} />
         </Modal>
       )}
       <div className="relative feed-content w-full flex flex-row justify-center">
-        <Sidebar />
+        <div className="hidden md:block">
+          <Sidebar />
+        </div>
 
         <div className="post-content-container flex flex-col items-center w-3/5 mr-32 pb-8 m-0 bg-gray-100 rounded-xl">
           <CreatePost openCreatePost={openCreatePost} />
