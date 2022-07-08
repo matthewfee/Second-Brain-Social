@@ -59,5 +59,5 @@ export const Sidebar = () => {
       })}
     </ul>
   );
-  return <aside className="max-w-[240px]">{navsList}</aside>;
+  return <aside className="max-w-[240px] fixed left-0">{navsList}</aside>;
 };

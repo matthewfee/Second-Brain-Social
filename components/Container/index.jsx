@@ -33,8 +33,8 @@ export const Container = ({ children }) => {
   }
 
   return (
-    <div className="relative h-full w-full flex flex-col bg-gradient-to-r from-[#ffffff66] to-[#ffffff1a]">
-      <div className="header relative flex flex-row justify-between h-[78px] m-4">
+    <div className="relative h-full w-full flex flex-col">
+      <div className="header fixed left-0 right-0 flex items-center justify-between p-4 bg-[#fff] z-10">
         <div className="logo text-[#4E5D78] font-bold text-2xl flex">
           <svg
             width="26"
@@ -60,7 +60,7 @@ export const Container = ({ children }) => {
           {isLoggedIn && <Button callback={() => firebaseLogout()}>Logout</Button>}
         </div>
       </div>
-      {children}
+      <div className="mt-24">{children}</div>
     </div>
   );
 };

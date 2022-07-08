@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { CreatePost, PostCard, Sidebar, Modal } from '../components';
+import { CreatePost, PostCard, Sidebar, Modal, FriendsList } from '../components';
 import { useStateValue, setUser, setModal } from '../contexts';
 import { auth } from '../services/firebase';
 import { getPosts } from '../services/posts';
@@ -47,10 +47,10 @@ const Feed = () => {
           <CreatePost createPost closeCreatePost={closeCreatePost} />
         </Modal>
       )}
-      <div className="relative feed-content w-full flex flex-row">
+      <div className="relative feed-content w-full flex flex-row justify-center">
         <Sidebar />
 
-        <div className="post-content-container flex flex-col items-center w-full p-0 m-0  ">
+        <div className="post-content-container flex flex-col items-center w-3/5 mr-32 pb-8 m-0 bg-gray-100 rounded-xl">
           <CreatePost openCreatePost={openCreatePost} />
 
           {posts &&
@@ -59,6 +59,7 @@ const Feed = () => {
               <PostCard key={i} post={post} />
             ))}
         </div>
+        <FriendsList />
       </div>
     </>
   );

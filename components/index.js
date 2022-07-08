@@ -16,3 +16,4 @@ export { Backdrop } from './Backdrop';
 export { NavBar } from './NavBar';
 export { GenderPicker } from './GenderPicker';
 export { Modal } from './Modal';
+export { FriendsList } from './FriendList';
