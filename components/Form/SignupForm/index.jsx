@@ -11,8 +11,8 @@ import { PasswordInput } from '../PasswordInput';
 import { useStateValue, setUser } from '../../../contexts';
 
 export const SignupForm = ({ login }) => {
-  const [email, setEmail] = useState('test@gmail.com');
-  const [password, setPassword] = useState('password');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
   // eslint-disable-next-line no-unused-vars
@@ -24,9 +24,9 @@ export const SignupForm = ({ login }) => {
     const createdUser = await createUser({
       email,
       password,
-      name: 'test',
+      name: 'test2',
       dateOfBirth: '12/1/2003',
-      gender: 'male',
+      gender: 'female',
     });
     dispatch(setUser(createdUser));
     router.push('/feed');
