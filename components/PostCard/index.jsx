@@ -18,7 +18,8 @@ export const PostCard = ({ post }) => (
     <PostHeader headerImageSRC={post.images[0]} />
     <p className="text-gray-600">{post.text}</p>
     <div className="flex gap-1">
-      {post.images.length >= 1 && post.images.map((image) => <PostImage src={image} />)}
+      {post.images.length >= 1 &&
+        post.images.map((image) => <PostImage key={post.text} src={image} />)}
     </div>
     <PostReacted />
     <PostReactions />

@@ -1,16 +1,22 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { addPost } from '../../services';
 import { Button } from '../Button';
 import { PostProfileImage } from '../PostCard/PostProfileImage';
 import { PostInput } from '../PostInput';
 import { PreviewImage } from './PreviewImage';
+import { useStateValue } from '../../contexts';
 
-export const CreatePost = ({ createPost, openCreatePost, closeCreatePost }) => {
+export const CreatePost = ({ createPost, openCreatePost, closeCreatePost, fetchPosts }) => {
+  const { state } = useStateValue();
   const [newPost, setNewPost] = useState({
     text: '',
     image: null,
     emotion: '',
   });
+
+  const router = useRouter();
+
   const [images, setImages] = useState([]);
   // const [videosURLS, setVideosURLS] = useState([]);
 
@@ -39,8 +45,14 @@ export const CreatePost = ({ createPost, openCreatePost, closeCreatePost }) => {
   };
 
   const handlePost = async () => {
-    await addPost(newPost, images);
-    closeCreatePost();
+    if (state.user) {
+      await addPost({ ...newPost, uid: state.user.uid }, images);
+      fetchPosts();
+      closeCreatePost();
+    } else {
+      // Notify ("Only registered userd can post here");
+      router.push('/signup');
+    }
   };
 
   const headerImageSRC =

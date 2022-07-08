@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 import { DatePicker } from '../components';
-import { FileUploaderTester } from '../components/FileUploaderTester';
+// import { FileUploaderTester } from '../components/FileUploaderTester';
 import { useStateValue } from '../contexts';
 
 const Home = () => {
@@ -27,7 +27,7 @@ const Home = () => {
 
       <main className={styles.main}>
         <DatePicker type="date" />
-        <FileUploaderTester />
+        {/* <FileUploaderTester /> */}
       </main>
 
       <footer className={styles.footer}>Footer</footer>
