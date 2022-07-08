@@ -47,12 +47,12 @@ const Feed = () => {
           <CreatePost createPost closeCreatePost={closeCreatePost} fetchPosts={fetchPosts} />
         </Modal>
       )}
-      <div className="relative feed-content w-full flex flex-row justify-center">
-        <div className="hidden md:block">
+      <div className="relative w-full flex flex-row justify-center">
+        <div className="hidden lg:block fixed top-24 left-0 bottom-0 w-1/5 max-w-[200px] mr-2 bg-white">
           <Sidebar />
         </div>
 
-        <div className="post-content-container flex flex-col items-center w-3/5 mr-32 pb-8 m-0 bg-gray-100 rounded-xl">
+        <div className="post-content-container flex flex-col items-center w-full lg:w-3/5 mx-4 lg:ml-4 mr-8 pb-8 bg-gray-100 rounded-xl">
           <CreatePost openCreatePost={openCreatePost} />
 
           {posts &&
@@ -61,7 +61,9 @@ const Feed = () => {
               <PostCard key={i} post={post} />
             ))}
         </div>
-        <FriendsList />
+        <div className="hidden lg:block fixed right-0 bottom-0 top-32 bg-white w-1/5 mx-auto max-w-[300px]">
+          <FriendsList />
+        </div>
       </div>
     </>
   );

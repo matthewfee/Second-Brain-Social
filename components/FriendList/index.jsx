@@ -8,7 +8,7 @@ export const FriendsList = () => {
     'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8YmxhY2slMjBmYWNlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
   ];
   return (
-    <div className="w-1/5 text-gray-700 mr-8 fixed right-0 bottom-0 top-32 bg-white">
+    <div className=" text-gray-700 mr-8 ">
       <div className="flex mb-8 relative">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -49,11 +49,15 @@ export const FriendsList = () => {
       </div>
       {dummyProfilePictures.map((image) => (
         <div className="flex items-center justify-between my-4">
-          <div className="flex items-center gap-4 cursor-pointer hover:text-blue-500">
-            <img className="h-12 w-12 rounded-full object-cover" src={image} alt="profile" />
-            Friend&apos;s Name
+          <div className="flex items-center gap-2 cursor-pointer hover:text-blue-500">
+            <img
+              className="h-12 w-12 md:h-8 md:w-8 lg:h-12 lg:w-12 rounded-full object-cover"
+              src={image}
+              alt="profile"
+            />
+            <span className="text-sm whitespace-nowrap">Friend&apos;s Name</span>
           </div>
-          <span>2min</span>
+          <span className="text-xs">2min</span>
         </div>
       ))}
     </div>
