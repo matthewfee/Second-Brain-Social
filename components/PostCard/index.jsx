@@ -5,8 +5,6 @@ import { PostReactions } from './PostReactions';
 import { PostComments } from './PostComments';
 
 export const PostCard = ({ post }) => (
-  // console.log('');
-
   <div
     className="bg-white mt-8 md:rounded-lg p-5 
     mx-4 md:mx-auto flex 
@@ -19,7 +17,10 @@ export const PostCard = ({ post }) => (
     <p className="text-gray-600">{post.text}</p>
     <div className="flex gap-1">
       {post.images.length >= 1 &&
-        post.images.map((image) => <PostImage key={post.text} src={image} />)}
+        post.images.map((image, i) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <PostImage key={i} src={image} />
+        ))}
     </div>
     <PostReacted />
     <PostReactions />
