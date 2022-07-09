@@ -20,13 +20,6 @@ module.exports = {
   },
   plugins: ['react', 'prettier'],
   rules: {
-    // 'prettier/prettier': [
-    //   'warn',
-    //   {
-    //     singleQuote: true,
-    //     semi: false
-    //   }
-    // ],
     'import/no-named-as-default': 0,
     'react/jsx-filename-extension': [
       1,
