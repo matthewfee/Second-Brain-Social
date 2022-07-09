@@ -4,7 +4,6 @@ export const PostComment = () => (
       className="bg-gray-200 rounded-xl p-2 w-full text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
       id="inline-full-name"
       type="text"
-      value=""
       placeholder="Write a comment"
     />
     <div className="flex gap-2 absolute top-1/3 right-2">
