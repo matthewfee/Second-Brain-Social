@@ -15,7 +15,13 @@ const Feed = () => {
 
   const fetchPosts = async () => {
     const receivedPosts = await getPosts();
-    setPosts(receivedPosts);
+    console.log(receivedPosts, 'received Posts');
+
+    const receivedPostsSortedByRecentDate = receivedPosts.sort(
+      (a, b) => b.createdDate - a.createdDate
+    );
+
+    setPosts(receivedPostsSortedByRecentDate);
   };
 
   useEffect(() => {
@@ -44,7 +50,6 @@ const Feed = () => {
             // eslint-disable-next-line react/no-array-index-key
             <PostCard key={i} post={post} />
           ))}
-
       </div>
     </div>
   );
