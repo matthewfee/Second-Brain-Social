@@ -18,18 +18,24 @@ export const NavBar = () => (
       justify-around"
     >
       <div className="flex lg:flex-row-reverse ">
-        <div className="rounded-lg overflow-hidden h-12 w-12 relative cursor-pointer">
+        <a href="/profile" className="rounded-lg overflow-hidden h-12 w-12 relative cursor-pointer">
           <MyImage src={imageSRC} width={60} height={60} alt="Profile picture" />
-        </div>
-        <div className="hidden  lg:block lg:flex items-center lg:whitespace-nowrap lg:px-4  ">
+        </a>
+        <a
+          href="/profile"
+          className="hidden  lg:block lg:flex items-center lg:whitespace-nowrap lg:px-4  "
+        >
           <h3 className="text-gray-600 lg:align-middle">{username}</h3>
-        </div>
+        </a>
       </div>
       <SearchFilter />
       <div className="flex lg:hidden ">
         <Notifications />
       </div>
-      <div className=" hidden lg:flex lg:align-top lg:contents logo text-[#4E5D78] font-bold text-2xl flex">
+      <a
+        href="/home"
+        className=" hidden lg:flex lg:align-top lg:contents logo text-[#4E5D78] font-bold text-2xl flex"
+      >
         <div className="logo-title ml-2.5">Meetmax</div>
         <svg
           width="26"
@@ -47,7 +53,7 @@ export const NavBar = () => (
             fill="white"
           />
         </svg>
-      </div>
+      </a>
     </div>
   </div>
 );
