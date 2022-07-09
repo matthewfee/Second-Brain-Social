@@ -1,4 +1,4 @@
-export const PostInput = ({ inputChange, size }) => {
+export const PostInput = ({ inputChange, size, text }) => {
   const padding = size === 'small' ? '2' : '32';
 
   return (
@@ -8,6 +8,7 @@ export const PostInput = ({ inputChange, size }) => {
       placeholder="What's happening?"
       required
       onChange={inputChange}
+      value={text}
     />
   );
 };
