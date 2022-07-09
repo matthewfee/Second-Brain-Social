@@ -20,7 +20,6 @@ export const LoginForm = ({ login }) => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      console.log('CURRENT USER in loginForm', currentUser);
       if (currentUser) {
         // console.log('LOGGED IN');
         setUser(currentUser);

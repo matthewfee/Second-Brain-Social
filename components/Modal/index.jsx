@@ -4,9 +4,7 @@ import { createPortal } from 'react-dom';
 export const Modal = ({ children, closeModal }) => {
   // if (!isOpen) return null;
   const handleKeyDown = (event) => {
-    console.log('Keypress handler');
     if (event.key === 'Escape') {
-      console.log('Press escape');
       closeModal();
     }
   };
