@@ -48,7 +48,8 @@ export const FriendsList = () => {
         </svg>
       </div>
       {dummyProfilePictures.map((image) => (
-        <div className="flex items-center justify-between my-4">
+        // remove this random key later
+        <div key={Math.random()} className="flex items-center justify-between my-4">
           <div className="flex items-center gap-2 cursor-pointer hover:text-blue-500">
             <img
               className="h-12 w-12 md:h-8 md:w-8 lg:h-12 lg:w-12 rounded-full object-cover"
