@@ -1,5 +1,8 @@
 export const PROFILE_PICTURE_DEFAULT_URL = 'https://imgur.com/IsKSffy';
 
+export const HEADER_IMAGE_URL =
+  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGZhY2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60';
+
 export const langCodes = {
   af: 'Afrikaans',
   sq: 'Albanian',

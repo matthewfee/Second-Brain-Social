@@ -7,6 +7,7 @@ import { PostInput } from '../PostInput';
 import { PreviewImage } from './PreviewImage';
 import { useStateValue, setModal } from '../../contexts';
 import { Modal } from '../Modal';
+import { HEADER_IMAGE_URL } from '../../constants/constants';
 
 export const CreatePost = ({ fetchPosts }) => {
   const { state } = useStateValue();
@@ -73,9 +74,6 @@ export const CreatePost = ({ fetchPosts }) => {
     }
   };
 
-  const headerImageSRC =
-    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGZhY2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60';
-
   if (createPost) {
     return (
       <Modal closeModal={closeCreatePost}>
@@ -139,7 +137,7 @@ export const CreatePost = ({ fetchPosts }) => {
           </div>
           <hr className="border border-gray-300" />
           <div className="flex justify-between">
-            <PostProfileImage imageSRC={headerImageSRC} />
+            <PostProfileImage imageSRC={HEADER_IMAGE_URL} />
             <PostInput text={newPost.text} inputChange={handleTextChange} />
           </div>
           <div className="flex gap-2">
@@ -151,8 +149,8 @@ export const CreatePost = ({ fetchPosts }) => {
               />
             ))}
           </div>
-          <div className="md:flex md:justify-between text-md">
-            <div className="mb-4 flex items-center gap-2 hover:text-blue-500 cursor-pointer">
+          <div className="flex items-center gap-4 text-md">
+            <div className="flex items-center gap-2 hover:text-blue-500 cursor-pointer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -173,7 +171,7 @@ export const CreatePost = ({ fetchPosts }) => {
               {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label
                 htmlFor="post-image"
-                className="mb-4 flex items-center gap-2 hover:text-blue-500 cursor-pointer"
+                className="flex items-center gap-2 hover:text-blue-500 cursor-pointer"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +198,7 @@ export const CreatePost = ({ fetchPosts }) => {
                 onChange={handleFileInputChange}
               />
             </div>
-            <div className="mb-4 flex items-center gap-2 hover:text-blue-500 cursor-pointer">
+            <div className="flex items-center gap-2 hover:text-blue-500 cursor-pointer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -235,7 +233,7 @@ export const CreatePost = ({ fetchPosts }) => {
     h-auto text-gray-600 my-0"
     >
       <div className="flex justify-between items-center">
-        <PostProfileImage imageSRC={headerImageSRC} />
+        <PostProfileImage imageSRC={HEADER_IMAGE_URL} />
         <PostInput size="small" text={newPost?.text} inputChange={handleTextChange} />
       </div>
       <div className="flex flex-row-reverse">
