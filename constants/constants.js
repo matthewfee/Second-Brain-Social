@@ -1,3 +1,5 @@
+export const PROFILE_PICTURE_DEFAULT_URL = 'https://imgur.com/IsKSffy';
+
 export const langCodes = {
   af: 'Afrikaans',
   sq: 'Albanian',
