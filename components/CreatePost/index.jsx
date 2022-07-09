@@ -11,7 +11,7 @@ import { Modal } from '../Modal';
 export const CreatePost = ({ fetchPosts }) => {
   const { state } = useStateValue();
   const [newPost, setNewPost] = useState({
-    text: 'sdf',
+    text: '',
     image: null,
     emotion: '',
     createdDate: null,

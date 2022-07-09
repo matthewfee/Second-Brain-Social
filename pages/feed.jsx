@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { CreatePost, PostCard, Sidebar } from '../components';
+import { CreatePost, PostCard, Sidebar, FriendsList } from '../components';
 import { useStateValue, setUser } from '../contexts';
 import { auth } from '../services/firebase';
 import { getPosts } from '../services/posts';
@@ -15,8 +15,6 @@ const Feed = () => {
 
   const fetchPosts = async () => {
     const receivedPosts = await getPosts();
-    console.log(receivedPosts, 'received Posts');
-
     const receivedPostsSortedByRecentDate = receivedPosts.sort(
       (a, b) => b.createdDate - a.createdDate
     );
@@ -39,17 +37,20 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className="relative feed-content w-full flex flex-row">
-      <div className="hidden md:block">
+    <div className="relative w-full flex flex-row justify-center">
+      <div className="hidden lg:block fixed top-24 left-0 bottom-0 w-1/5 max-w-[200px] mr-2 bg-white">
         <Sidebar />
       </div>
-      <div className="post-content-container flex flex-col items-center w-full p-0 m-0  ">
+      <div className="post-content-container flex flex-col items-center w-full lg:w-3/5 mx-4 lg:ml-4 mr-8 pb-8 bg-gray-100 rounded-xl">
         <CreatePost fetchPosts={fetchPosts} />
         {posts &&
           posts.map((post, i) => (
             // eslint-disable-next-line react/no-array-index-key
             <PostCard key={i} post={post} />
           ))}
+      </div>
+      <div className="hidden lg:block fixed right-0 bottom-0 top-32 bg-white w-1/5 mx-auto max-w-[300px]">
+        <FriendsList />
       </div>
     </div>
   );
