@@ -14,6 +14,7 @@ export const CreatePost = ({ fetchPosts }) => {
     text: 'sdf',
     image: null,
     emotion: '',
+    createdDate: null,
   });
 
   const [createPost, setCreatePost] = useState(false);
@@ -62,7 +63,8 @@ export const CreatePost = ({ fetchPosts }) => {
 
   const handlePost = async () => {
     if (state.user) {
-      await addPost({ ...newPost, uid: state.user.uid }, images);
+      const date = new Date();
+      await addPost({ ...newPost, uid: state.user.uid, createdDate: date }, images);
       fetchPosts();
       closeCreatePost();
     } else {
