@@ -1,6 +1,7 @@
 export const PasswordInput = ({ password, setPassword, error, placeholder }) => {
   const handlePassword = (e) => {
     setPassword(e.target.value);
+    console.log(password);
   };
 
   return (
