@@ -14,13 +14,13 @@ export const LoginForm = ({ login }) => {
   const [password, setPassword] = useState('password');
   // const [user, setUser] = useState({ email: 'NO EMAIL' });
 
-  const { state, dispatch } = useStateValue();
+  const { dispatch } = useStateValue();
 
   const router = useRouter();
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      // console.log('CURRENT USER', currentUser);
+      console.log('CURRENT USER in loginForm', currentUser);
       if (currentUser) {
         // console.log('LOGGED IN');
         setUser(currentUser);
@@ -47,7 +47,7 @@ export const LoginForm = ({ login }) => {
         <GoogleExternalSignup login={login} />
         <AppleExternalSignup login={login} />
       </div>
-      <h1>User {state.user?.email}</h1>
+      {/* <h1>User {state.user?.email}</h1> */}
       <div className="relative flex py-2 items-center">
         <div className="flex-grow border-t border-gray-300" />
         <span className="flex-shrink mx-4 text-gray-600">OR</span>

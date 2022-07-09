@@ -1,9 +1,11 @@
 import { PostProfileImage } from '../PostProfileImage';
 
 export const PostHeader = ({ headerImageSRC }) => (
+  // console.log('');
+
   <div className="flex justify-between items-center">
     <div className="flex items-center gap-4">
-      <PostProfileImage imageSRC={headerImageSRC} />
+      {headerImageSRC && <PostProfileImage imageSRC={headerImageSRC} />}
       <div className="text-xl">
         <p className="text-sm">Sepural Gallery</p>
         <p className="text-gray-400 text-xs">15h. Public</p>

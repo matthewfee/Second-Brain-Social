@@ -12,8 +12,8 @@ import { useStateValue, setUser } from '../../../contexts';
 import { PROFILE_PICTURE_DEFAULT_URL } from '../../../constants/constants';
 
 export const SignupForm = ({ login }) => {
-  const [email, setEmail] = useState('test@gmail.com');
-  const [password, setPassword] = useState('password');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
   // eslint-disable-next-line no-unused-vars
@@ -25,9 +25,9 @@ export const SignupForm = ({ login }) => {
     const createdUser = await createUser({
       email,
       password,
-      name: 'test',
+      name: 'test2',
       dateOfBirth: '12/1/2003',
-      gender: 'male',
+      gender: 'female',
       profilePictureURL: PROFILE_PICTURE_DEFAULT_URL,
     });
     dispatch(setUser(createdUser));
