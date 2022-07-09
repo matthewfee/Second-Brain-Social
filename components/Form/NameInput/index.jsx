@@ -1,6 +1,12 @@
-export const TextInput = ({ type, inputChange, error, value }) => {
-  const handleChange = (e) => {
+export const TextInput = ({ type, error, name, inputChange, email }) => {
+  const handleName = (e) => {
     inputChange(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const handleEmail = (e) => {
+    inputChange(e.target.value);
+    console.log(e.target.value);
   };
 
   if (type === 'name') {
@@ -28,7 +34,8 @@ export const TextInput = ({ type, inputChange, error, value }) => {
             type="text"
             placeholder="Your Name"
             required
-            onChange={inputChange}
+            onChange={handleName}
+            value={name}
           />
         </div>
         <p
@@ -64,8 +71,8 @@ export const TextInput = ({ type, inputChange, error, value }) => {
           type="email"
           placeholder="Your Email"
           required
-          onChange={handleChange}
-          value={value}
+          onChange={handleEmail}
+          value={email}
         />
       </div>
       <p
