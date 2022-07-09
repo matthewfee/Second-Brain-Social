@@ -1,12 +1,12 @@
 export const TextInput = ({ type, error, name, inputChange, email }) => {
   const handleName = (e) => {
     inputChange(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   const handleEmail = (e) => {
     inputChange(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   if (type === 'name') {
