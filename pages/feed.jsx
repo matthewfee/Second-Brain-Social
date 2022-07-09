@@ -44,6 +44,7 @@ const Feed = () => {
             // eslint-disable-next-line react/no-array-index-key
             <PostCard key={i} post={post} />
           ))}
+
       </div>
     </div>
   );

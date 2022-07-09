@@ -35,7 +35,7 @@ export const Sidebar = () => {
 
   const router = useRouter();
   const baseClassName =
-    'flex gap-3 items-center p-4 py-4 my-2 rounded-lg hover:bg-[#4E5D78] hover:text-white cursor-pointer';
+    'flex gap-3 items-center p-4 m-2 rounded-lg hover:bg-[#4E5D78] hover:text-white cursor-pointer';
 
   const navsList = (
     <ul>
@@ -59,5 +59,5 @@ export const Sidebar = () => {
       })}
     </ul>
   );
-  return <aside className="max-w-[240px]">{navsList}</aside>;
+  return <aside className="">{navsList}</aside>;
 };
