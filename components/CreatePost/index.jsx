@@ -150,7 +150,7 @@ export const CreatePost = ({ fetchPosts }) => {
             ))}
           </div>
           <div className="flex items-center gap-4 text-md">
-            <div className="flex items-center gap-2 hover:text-blue-500 cursor-pointer">
+            {/* <div className="flex items-center gap-2 hover:text-blue-500 cursor-pointer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -166,7 +166,7 @@ export const CreatePost = ({ fetchPosts }) => {
                 />
               </svg>
               Live Video
-            </div>
+            </div> */}
             <div>
               {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label
