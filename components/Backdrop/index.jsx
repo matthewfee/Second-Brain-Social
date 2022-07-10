@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const Backdrop = ({ children, show }) => {
   const showBackdrop = show ? 'block' : 'hidden';
 
