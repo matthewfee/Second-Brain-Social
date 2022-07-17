@@ -1,13 +1,13 @@
 // import { langCodes } from '../../constants/constants';
-import { useRouter } from 'next/router';
-import { signOut, onAuthStateChanged } from 'firebase/auth';
+
+import { onAuthStateChanged } from 'firebase/auth';
 import { useState, useEffect } from 'react';
+import { HEADER_IMAGE_URL } from '../../constants/constants';
 import { auth } from '../../services/firebase';
+import { MyImage } from '../MyImage';
 
 export const Container = ({ children }) => {
   const [user, setUser] = useState({ email: '' });
-
-  const router = useRouter();
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -20,10 +20,7 @@ export const Container = ({ children }) => {
     });
   }, []);
 
-  const firebaseLogout = async () => {
-    await signOut(auth);
-    router.push('/login');
-  };
+  console.log('USER', user);
 
   let isLoggedIn = false;
 
@@ -54,10 +51,16 @@ export const Container = ({ children }) => {
 
           <div className="logo-title ml-2.5">Meetmax</div>
         </div>
-        <div className="login-info-container">
-          <h3>{user?.email}</h3>
-          {isLoggedIn}
-        </div>
+        {isLoggedIn && (
+          <div className="login-info-container flex">
+            <div className="user-name-container pr-5 text-lg font-medium flex items-center">
+              {user?.displayName ? user?.displayName : 'User'}
+            </div>
+            <div className="pl-5 pr-8 rounded-xl overflow-hidden h-12 w-12 relative cursor-pointer ">
+              <MyImage src={HEADER_IMAGE_URL} width={60} height={60} alt="Profile picture" />
+            </div>
+          </div>
+        )}
       </div>
       <div className="mt-24">{children}</div>
     </div>
