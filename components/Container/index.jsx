@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { useState, useEffect } from 'react';
 import { auth } from '../../services/firebase';
-import Button from '../Button';
 
 export const Container = ({ children }) => {
   const [user, setUser] = useState({ email: '' });
@@ -57,7 +56,7 @@ export const Container = ({ children }) => {
         </div>
         <div className="login-info-container">
           <h3>{user?.email}</h3>
-          {isLoggedIn && <Button callback={() => firebaseLogout()}>Logout</Button>}
+          {isLoggedIn}
         </div>
       </div>
       <div className="mt-24">{children}</div>
