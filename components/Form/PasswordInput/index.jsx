@@ -1,4 +1,4 @@
-export const PasswordInput = ({ password, setPassword, error, placeholder }) => {
+export const PasswordInput = ({ password, setPassword, error, placeholder, keyCallback }) => {
   const handlePassword = (e) => {
     setPassword(e.target.value);
     // console.log(password);
@@ -49,6 +49,7 @@ export const PasswordInput = ({ password, setPassword, error, placeholder }) => 
           required
           onChange={handlePassword}
           value={password}
+          onKeyPress={keyCallback}
         />
       </div>
       <p

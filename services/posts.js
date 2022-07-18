@@ -1,4 +1,13 @@
-import { collection, addDoc, getDocs, doc, deleteDoc } from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  getDoc,
+  getDocs,
+  doc,
+  deleteDoc,
+  increment,
+  updateDoc,
+} from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage, db } from './firebase';
 
@@ -12,7 +21,10 @@ export const getPosts = async () => {
     const querySnapshot = await getDocs(postsColRef);
     querySnapshot.forEach((snapshopDoc) => {
       // doc.data() is never undefined for query doc snapshots
-      posts.push(snapshopDoc.data());
+
+      const newObj = snapshopDoc.data();
+      newObj.postId = snapshopDoc.id;
+      posts.push(newObj);
     });
     return posts;
   } catch (error) {
@@ -33,12 +45,11 @@ export const addPost = async (newPost, images) => {
         return imageDownloadPath;
       })
     );
-    console.log('imagesPath: ', imagesPath);
     postToAdd.images = imagesPath;
     const addedPost = await addDoc(postsColRef, postToAdd);
     return addedPost;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return {};
   }
 };
@@ -52,5 +63,28 @@ export const deletePost = async (postID) => {
     //   return deletedPost;
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const likePost = async (post) => {
+  const docRef = await doc(db, 'posts', post.postId);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+
+    if (data.userLikes) {
+      if (data?.userLikes?.includes(post.uid)) {
+        console.log('user already liked post');
+        return;
+      }
+    }
+
+    await updateDoc(docRef, {
+      likes: increment(1),
+      userLikes: [...data.userLikes, post.uid],
+    });
+  } else {
+    console.log('No post found');
   }
 };

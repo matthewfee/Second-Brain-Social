@@ -73,7 +73,6 @@ export const SignupForm = ({ login }) => {
       <small className="mx-auto">
         Already have an account?
         <button
-          role="link"
           className="text-blue-500 hover:text-blue-700 ml-2"
           tabIndex={0}
           onClick={() => router.push('/login')}

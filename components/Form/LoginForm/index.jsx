@@ -40,6 +40,12 @@ export const LoginForm = ({ login }) => {
     }
   };
 
+  const keyHandlerLogin = (e) => {
+    if (e.key === 'Enter') {
+      firebaseLogin();
+    }
+  };
+
   return (
     <form className="bg-white rounded-lg p-5 min-w-[400px] w-full max-w-xl mx-4 md:mx-auto flex flex-col justify-between gap-5 drop-shadow-xl">
       <div className="signup-with flex justify-between">
@@ -52,20 +58,29 @@ export const LoginForm = ({ login }) => {
         <span className="flex-shrink mx-4 text-gray-600">OR</span>
         <div className="flex-grow border-t border-gray-300" />
       </div>
-      <TextInput type="email" value={email} inputChange={setEmail} />
-      <PasswordInput password={password} setPassword={setPassword} />
+      <TextInput
+        keyCallback={(e) => keyHandlerLogin(e)}
+        type="email"
+        value={email}
+        inputChange={setEmail}
+      />
+      <PasswordInput
+        keyCallback={(e) => keyHandlerLogin(e)}
+        password={password}
+        setPassword={setPassword}
+      />
       <Button callback={() => firebaseLogin()}>Login</Button>
       <small className="mx-auto">
         {`Don't have an account?  `}
-        <a
-          role="link"
+        <button
+          type="button"
           className="text-blue-500 hover:text-blue-700 ml-2"
           tabIndex={0}
           onClick={() => router.push('/signup')}
           onKeyPress={() => router.push('/signup')}
         >
           Sign Up
-        </a>
+        </button>
       </small>
     </form>
   );

@@ -24,3 +24,5 @@ export const storage = getStorage(firebaseApp);
 export const auth = getAuth(firebaseApp);
 
 export const isLoggedIn = () => auth.currentUser;
+
+
