@@ -57,15 +57,15 @@ export const LoginForm = ({ login }) => {
       <Button callback={() => firebaseLogin()}>Login</Button>
       <small className="mx-auto">
         {`Don't have an account?  `}
-        <a
-          role="link"
+        <button
+          type="button"
           className="text-blue-500 hover:text-blue-700 ml-2"
           tabIndex={0}
           onClick={() => router.push('/signup')}
           onKeyPress={() => router.push('/signup')}
         >
           Sign Up
-        </a>
+        </button>
       </small>
     </form>
   );
