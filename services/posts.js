@@ -88,3 +88,20 @@ export const likePost = async (post) => {
     console.log('No post found');
   }
 };
+
+export const commentPost = async (commentText, postId, userId) => {
+  const docRef = doc(db, 'posts', postId);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+
+    const comments = data.comment
+      ? data.comment.slice().push(commentText)
+      : [{ comment: commentText, userId }];
+
+    await updateDoc(docRef, {
+      comments,
+    });
+  }
+};

@@ -19,7 +19,7 @@ const Feed = () => {
       (a, b) => b.createdDate - a.createdDate
     );
 
-    console.log(receivedPostsSortedByRecentDate);
+    console.log('receivedPostsSortedByRecentDate: ', receivedPostsSortedByRecentDate);
 
     setPosts(receivedPostsSortedByRecentDate);
   };
@@ -48,7 +48,7 @@ const Feed = () => {
         {posts &&
           posts.map((post, i) => (
             // eslint-disable-next-line react/no-array-index-key
-            <PostCard key={i} post={post} />
+            <PostCard key={i} post={post} fetchPosts={fetchPosts} />
           ))}
       </div>
       <div className="hidden lg:block fixed right-0 bottom-0 top-32 bg-white w-1/5 mx-auto max-w-[300px]">
