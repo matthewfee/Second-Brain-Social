@@ -1,6 +1,17 @@
-import { collection, addDoc, getDocs, doc, deleteDoc } from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  getDoc,
+  getDocs,
+  doc,
+  deleteDoc,
+  increment,
+  update,
+  updateDoc,
+  get,
+} from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { storage, db } from './firebase';
+import { storage, db, firebaseApp } from './firebase';
 
 // collection ref
 const postsColRef = collection(db, 'posts');
@@ -12,7 +23,12 @@ export const getPosts = async () => {
     const querySnapshot = await getDocs(postsColRef);
     querySnapshot.forEach((snapshopDoc) => {
       // doc.data() is never undefined for query doc snapshots
-      posts.push(snapshopDoc.data());
+
+      console.log(snapshopDoc, 'snapshopDoc');
+
+      const newObj = snapshopDoc.data();
+      newObj.postId = snapshopDoc.id;
+      posts.push(newObj);
     });
     return posts;
   } catch (error) {
@@ -52,5 +68,28 @@ export const deletePost = async (postID) => {
     //   return deletedPost;
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const likePost = async (post) => {
+  const docRef = await doc(db, 'posts', post.postId);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+
+    console.log('Document data:', data);
+
+    if (data.userLikes.includes(post.uid)) {
+      console.log('user already liked post');
+      return;
+    }
+
+    await updateDoc(docRef, {
+      likes: increment(1),
+      userLikes: [...data.userLikes, post.uid],
+    });
+  } else {
+    console.log('No post found');
   }
 };

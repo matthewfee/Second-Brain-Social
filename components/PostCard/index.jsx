@@ -23,7 +23,7 @@ export const PostCard = ({ post }) => (
         ))}
     </div>
     <PostReacted />
-    <PostReactions />
+    <PostReactions post={post} />
     <PostComments />
   </div>
 );

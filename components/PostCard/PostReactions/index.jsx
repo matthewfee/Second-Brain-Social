@@ -1,6 +1,12 @@
-export const PostReactions = () => (
+import { likePost } from '../../../services/posts';
+
+export const PostReactions = ({ post }) => (
   <div className="flex justify-between py-1 border-t-2 border-b-2 border-gray-300">
-    <div className="flex gap-1 items-center hover:text-blue-500 cursor-pointer">
+    <button
+      type="button"
+      onClick={() => likePost(post)}
+      className="flex gap-1 items-center hover:text-blue-500 cursor-pointer"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-4 w-4"
@@ -14,7 +20,7 @@ export const PostReactions = () => (
         />
       </svg>
       Like
-    </div>
+    </button>
     <div className="flex gap-1 items-center hover:text-blue-500 cursor-pointer">
       <svg
         xmlns="http://www.w3.org/2000/svg"
