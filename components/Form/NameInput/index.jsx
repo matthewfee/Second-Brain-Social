@@ -1,4 +1,4 @@
-export const TextInput = ({ type, error, name, inputChange, email }) => {
+export const TextInput = ({ type, error, name, inputChange, email, keyCallback }) => {
   const handleName = (e) => {
     inputChange(e.target.value);
     // console.log(name);
@@ -36,6 +36,7 @@ export const TextInput = ({ type, error, name, inputChange, email }) => {
             required
             onChange={handleName}
             value={name}
+            onKeyPress={keyCallback}
           />
         </div>
         <p
@@ -73,6 +74,7 @@ export const TextInput = ({ type, error, name, inputChange, email }) => {
           required
           onChange={handleEmail}
           value={email}
+          onKeyPress={keyCallback}
         />
       </div>
       <p
