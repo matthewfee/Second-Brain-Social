@@ -1,7 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import {
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithRedirect,
+  getRedirectResult,
+} from 'firebase/auth';
 import { TextInput } from '../NameInput';
 import { GoogleExternalSignup, AppleExternalSignup } from '../ExternalSignup';
 import { Button } from '../../Button';
@@ -17,6 +23,7 @@ export const LoginForm = ({ login }) => {
   const { dispatch } = useStateValue();
 
   const router = useRouter();
+  const provider = new GoogleAuthProvider();
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -29,6 +36,44 @@ export const LoginForm = ({ login }) => {
       }
     });
   }, []);
+
+  useEffect(() => {
+    getRedirectResult(auth)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access Google APIs.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+
+        // The signed-in user info.
+        const { user } = result;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  const signInWithGoogle = () => {
+    console.log('SIGNING IN WITH GOOGLE');
+    signInWithRedirect(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const { user } = result;
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const { email } = error.customData;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  };
 
   const firebaseLogin = async () => {
     try {
@@ -49,7 +94,7 @@ export const LoginForm = ({ login }) => {
   return (
     <form className="bg-white rounded-lg p-5 min-w-[400px] w-full max-w-xl mx-4 md:mx-auto flex flex-col justify-between gap-5 drop-shadow-xl">
       <div className="signup-with flex justify-between">
-        <GoogleExternalSignup login={login} />
+        <GoogleExternalSignup login={login} callback={signInWithGoogle} />
         <AppleExternalSignup login={login} />
       </div>
       {/* <h1>User {state.user?.email}</h1> */}

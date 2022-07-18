@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-export const GoogleExternalSignup = ({ login }) => (
-  <a
+export const GoogleExternalSignup = ({ login, callback }) => (
+  <button
+    type="button"
+    onClick={callback}
     href="#"
     className="bg-gray-200 hover:bg-gray-300 w-[48%] md:px-4 flex gap-3 items-center justify-center rounded-lg shrink-0"
   >
@@ -18,7 +20,7 @@ export const GoogleExternalSignup = ({ login }) => (
     <span className="text-[#4E5D78] text-sm my-2 font-semibold md:text-base leading-6">
       {login ? 'Login' : 'Signup'} with Google
     </span>
-  </a>
+  </button>
 );
 
 export const AppleExternalSignup = ({ login }) => (
