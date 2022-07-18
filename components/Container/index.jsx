@@ -12,15 +12,8 @@ export const Container = ({ children }) => {
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      if (currentUser) {
-        // console.log('LOGGED IN');
-      } else {
-        // console.log('LOGGED OUT');
-      }
     });
   }, []);
-
-  console.log('USER', user);
 
   let isLoggedIn = false;
 
