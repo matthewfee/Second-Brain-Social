@@ -9,8 +9,6 @@ export const PostReactions = ({ post }) => {
   const userHasLikedPost = post?.userLikes?.includes(userId);
   const postLikesString = post.likes > 0 ? `(${post?.likes})` : '';
 
-  console.log(post, userHasLikedPost);
-
   return (
     <div className="flex justify-between py-1 border-t-2 border-b-2 border-gray-300">
       <button

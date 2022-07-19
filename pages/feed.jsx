@@ -19,8 +19,6 @@ const Feed = () => {
       (a, b) => b.createdDate - a.createdDate
     );
 
-    console.log('receivedPostsSortedByRecentDate: ', receivedPostsSortedByRecentDate);
-
     setPosts(receivedPostsSortedByRecentDate);
   };
 

@@ -6,7 +6,6 @@ export const SearchFilter = () => {
   const handleOnChange = (event) => {
     const { value } = event.target;
     setInputValues({ ...inputValues, value });
-    console.log(event.target.value);
   };
 
   return (
