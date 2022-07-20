@@ -17,6 +17,7 @@ export const SignupForm = ({ login }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [gender, setGender] = useState(null);
 
   // eslint-disable-next-line no-unused-vars
   const { state, dispatch } = useStateValue();
@@ -72,7 +73,7 @@ export const SignupForm = ({ login }) => {
       ) : null}
       <div className="bottom-form-section flex flex-row justify-between">
         <DatePicker />
-        <GenderPicker />
+        <GenderPicker gender={gender} setGender={setGender} />
       </div>
       <Button
         callback={() => {

@@ -13,7 +13,7 @@ export const PostReactions = ({ post }) => {
     <div className="flex justify-between py-1 border-t-2 border-b-2 border-gray-300">
       <button
         type="button"
-        onClick={() => likePost(post)}
+        onClick={() => likePost(post, userId)}
         className={`flex gap-1 items-center hover:text-blue-500 cursor-pointer ${
           userHasLikedPost ? 'text-blue-500' : ''
         }`}

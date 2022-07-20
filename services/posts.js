@@ -66,15 +66,17 @@ export const deletePost = async (postID) => {
   }
 };
 
-export const likePost = async (post) => {
+export const likePost = async (post, userID) => {
   const docRef = await doc(db, 'posts', post.postId);
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
     const data = docSnap.data();
 
+    console.log('postdata', data, userID);
+
     if (data.userLikes) {
-      if (data?.userLikes?.includes(post.uid)) {
+      if (data?.userLikes?.includes(userID)) {
         console.log('user already liked post');
         return;
       }
@@ -82,7 +84,7 @@ export const likePost = async (post) => {
 
     await updateDoc(docRef, {
       likes: increment(1),
-      userLikes: [...data.userLikes, post.uid],
+      userLikes: [...data.userLikes, userID],
     });
   } else {
     console.log('No post found');
