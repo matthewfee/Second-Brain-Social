@@ -1,10 +1,12 @@
-export const PostComment = () => (
+export const PostComment = ({ setCommentText, commentText }) => (
   <div className="relative">
     <input
       className="bg-gray-200 rounded-xl p-2 w-full text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
       id="inline-full-name"
       type="text"
       placeholder="Write a comment"
+      onChange={(e) => setCommentText(e.target.value)}
+      value={commentText}
     />
     <div className="flex gap-2 absolute top-1/3 right-2">
       <svg
