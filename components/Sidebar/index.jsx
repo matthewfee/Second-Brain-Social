@@ -39,7 +39,7 @@ export const Sidebar = () => {
     { name: 'Explore', path: '/explore', comp: earthSVG, notification: 0 },
     { name: 'Profile', path: '/profile', comp: userSVG, notification: 0 },
     { name: 'Settings', path: '/settings', comp: settingsSVG, notification: 0 },
-    { name: 'Logout', path: '/logout', comp: logoutSVG, notification: 0, callback: firebaseLogout },
+    { name: 'Logout', path: '/login', comp: logoutSVG, notification: 0, callback: firebaseLogout },
   ];
 
   const baseClassName =
