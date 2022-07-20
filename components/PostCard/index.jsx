@@ -26,7 +26,7 @@ export const PostCard = ({ post, fetchPosts }) => {
             <PostImage key={i} src={image} />
           ))}
       </div>
-      <PostReacted />
+      <PostReacted comments={post?.comments} likes={post?.likes} />
       <PostReactions post={post} />
       <PostComments postId={post.postId} user={state.user} fetchPosts={fetchPosts} />
     </div>
