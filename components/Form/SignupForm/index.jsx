@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
 import { createUser } from '../../../services/users';
 import { Button } from '../../Button';
 import { DatePicker } from '../../DatePicker';
@@ -10,6 +11,7 @@ import { TextInput } from '../NameInput';
 import { PasswordInput } from '../PasswordInput';
 import { useStateValue, setUser } from '../../../contexts';
 import { PROFILE_PICTURE_DEFAULT_URL } from '../../../constants/constants';
+import { auth } from '../../../services/firebase';
 
 export const SignupForm = ({ login }) => {
   const [email, setEmail] = useState('');
@@ -34,10 +36,19 @@ export const SignupForm = ({ login }) => {
     router.push('/feed');
   };
 
+  const provider = new GoogleAuthProvider();
+
+  const signInWithGoogle = () => {
+    console.log('SIGNING IN WITH GOOGLE');
+    signInWithRedirect(auth, provider).catch((error) => {
+      console.error(error);
+    });
+  };
+
   return (
     <form className="bg-white rounded-lg p-5 min-w-[400px] w-full max-w-xl mx-4 md:mx-auto flex flex-col justify-between gap-5 drop-shadow-xl">
       <div className="signup-with flex justify-between">
-        <GoogleExternalSignup login={login} />
+        <GoogleExternalSignup login={login} callback={signInWithGoogle} />
         <AppleExternalSignup login={login} />
       </div>
       <div className="relative flex py-2 items-center">

@@ -39,14 +39,14 @@ export const LoginForm = ({ login }) => {
 
   useEffect(() => {
     getRedirectResult(auth)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access Google APIs.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
+      // .then((result) => {
+      // This gives you a Google Access Token. You can use it to access Google APIs.
+      // const credential = GoogleAuthProvider.credentialFromResult(result);
+      // const token = credential.accessToken;
 
-        // The signed-in user info.
-        const { user } = result;
-      })
+      // The signed-in user info.
+      // const { user } = result;
+      // })
       .catch((error) => {
         console.error(error);
       });
@@ -55,22 +55,23 @@ export const LoginForm = ({ login }) => {
   const signInWithGoogle = () => {
     console.log('SIGNING IN WITH GOOGLE');
     signInWithRedirect(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const { user } = result;
-        // ...
-      })
+      // .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      // const credential = GoogleAuthProvider.credentialFromResult(result);
+      // const token = credential.accessToken;
+      // The signed-in user info.
+      // const { user } = result;
+      // ...
+      // })
       .catch((error) => {
+        console.error(error);
         // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const { email } = error.customData;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
+        //  The email of the user's account used.
+        // const { email } = error.customData;
+        // /The AuthCredential type that was used.
+        // const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
       });
   };
