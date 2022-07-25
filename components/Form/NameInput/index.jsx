@@ -1,15 +1,9 @@
-export const TextInput = ({ type, error, name, inputChange, email, keyCallback }) => {
-  const handleName = (e) => {
-    inputChange(e.target.value);
-    // console.log(name);
-  };
+import { useField } from 'formik';
 
-  const handleEmail = (e) => {
-    inputChange(e.target.value);
-    // console.log(email);
-  };
+export const TextInput = ({ type, ...props }) => {
+  const [field, meta] = useField(props);
 
-  if (type === 'name') {
+  if (type === 'text') {
     return (
       <div className="w-full">
         <div className="flex gap-2 p-2 rounded-xl border-2 border-gray-400 h-12">
@@ -32,21 +26,12 @@ export const TextInput = ({ type, error, name, inputChange, email, keyCallback }
           <input
             className="outline-none pl-2 w-full"
             type="text"
-            placeholder="Your Name"
-            required
-            onChange={handleName}
-            value={name}
-            onKeyPress={keyCallback}
+            placeholder={props.placeholder}
+            {...field}
+            {...props}
           />
         </div>
-        <p
-          style={{
-            color: '#FF5630',
-            display: error ? 'block' : 'none',
-          }}
-        >
-          Please enter a valid Name
-        </p>
+        {meta.touched && meta.error ? <div className="text-red-500 error">{meta.error}</div> : null}
       </div>
     );
   }
@@ -70,21 +55,12 @@ export const TextInput = ({ type, error, name, inputChange, email, keyCallback }
         <input
           className="outline-none pl-2 w-full"
           type="email"
-          placeholder="Your Email"
-          required
-          onChange={handleEmail}
-          value={email}
-          onKeyPress={keyCallback}
+          placeholder={props.placeholder}
+          {...field}
+          {...props}
         />
       </div>
-      <p
-        style={{
-          color: '#FF5630',
-          display: error ? 'block' : 'none',
-        }}
-      >
-        Please enter a valid email address
-      </p>
+      {meta.touched && meta.error ? <div className="text-red-500 error">{meta.error}</div> : null}
     </div>
   );
 };
