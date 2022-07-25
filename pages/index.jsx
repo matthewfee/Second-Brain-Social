@@ -2,8 +2,6 @@ import Head from 'next/head';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
-import { DatePicker } from '../components';
-// import { FileUploaderTester } from '../components/FileUploaderTester';
 import { useStateValue } from '../contexts';
 
 const Home = () => {
@@ -25,10 +23,7 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <DatePicker type="date" />
-        {/* <FileUploaderTester /> */}
-      </main>
+      <main className={styles.main}>Index</main>
 
       <footer className={styles.footer}>Footer</footer>
     </div>
