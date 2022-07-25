@@ -6,7 +6,7 @@ export { AnchorButton } from './AnchorButton';
 export { PasswordInput } from './Form/PasswordInput';
 export { Card } from './Card';
 export { Button } from './Button';
-export { DatePicker } from './DatePicker';
+export { DatePickerField } from './DatePicker';
 export { PostCard } from './PostCard';
 export { MyImage } from './MyImage';
 export { Sidebar } from './Sidebar';

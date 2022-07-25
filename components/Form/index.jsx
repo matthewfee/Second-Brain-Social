@@ -4,7 +4,7 @@ import { TextInput } from './NameInput';
 import { GoogleExternalSignup, AppleExternalSignup } from './ExternalSignup';
 import { Button } from '../Button';
 import { PasswordInput } from './PasswordInput';
-import { DatePicker } from '../DatePicker';
+import { DatePickerField } from '../DatePicker';
 
 export const Form = ({ login, signup }) => {
   const router = useRouter();
@@ -28,7 +28,7 @@ export const Form = ({ login, signup }) => {
       {signup && <PasswordInput placeholder="Password confirmation" />}
       {signup && (
         <div className="bottom-form-section flex flex-row justify-between">
-          <DatePicker />
+          <DatePickerField name="dateOfBirth" />
           <div className="gender flex gap-2 p-2 rounded-xl border-2 border-gray-400 w-full max-w-[240px]">
             <label htmlFor="gender" key="male" className="p-1">
               <input type="radio" />
