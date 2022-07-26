@@ -1,8 +1,7 @@
-export const PasswordInput = ({ password, setPassword, error, placeholder, keyCallback }) => {
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-    // console.log(password);
-  };
+import { useField } from 'formik';
+
+export const PasswordInput = (props) => {
+  const [field, meta] = useField(props);
 
   return (
     <div className="w-full">
@@ -42,24 +41,9 @@ export const PasswordInput = ({ password, setPassword, error, placeholder, keyCa
           </svg>
         </div>
 
-        <input
-          className="outline-none pl-2 w-full bg-none"
-          type="password"
-          placeholder={placeholder}
-          required
-          onChange={handlePassword}
-          value={password}
-          onKeyPress={keyCallback}
-        />
+        <input className="outline-none pl-2 w-full bg-none" {...field} {...props} />
       </div>
-      <p
-        style={{
-          color: '#FF5630',
-          display: error ? 'block' : 'none',
-        }}
-      >
-        Please enter a valid password
-      </p>
+      {meta.touched && meta.error ? <div className="text-red-500 error">{meta.error}</div> : null}
     </div>
   );
 };

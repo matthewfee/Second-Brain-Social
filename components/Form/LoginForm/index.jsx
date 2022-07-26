@@ -11,6 +11,8 @@ import {
   signInWithRedirect,
   getRedirectResult,
 } from 'firebase/auth';
+import { Formik, Form } from 'formik';
+import * as yup from 'yup';
 import { TextInput } from '../NameInput';
 import { GoogleExternalSignup, AppleExternalSignup } from '../ExternalSignup';
 import { Button } from '../../Button';
@@ -31,9 +33,8 @@ export const LoginForm = ({ login }) => {
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        // console.log('LOGGED IN');
         setUser(currentUser);
-        router.push('/feed');
+        // router.push('/feed');
       } else {
         // console.log('LOGGED OUT');
       }
@@ -90,47 +91,63 @@ export const LoginForm = ({ login }) => {
   };
 
   const keyHandlerLogin = (e) => {
-    if (e.key === 'Enter') {
-      firebaseLogin();
-    }
+    firebaseLogin();
   };
 
+  const initialValues = {
+    email: '',
+    password: '',
+  };
+
+  const validationSchema = yup.object({
+    email: yup.string().email('Invalid email address').required('Please enter your Email'),
+    password: yup
+      .string()
+      .required('No password provided.')
+      .min(8, 'Password is too short - should be 8 chars minimum.'),
+  });
+
   return (
-    <form className="bg-white rounded-lg p-5 min-w-[400px] w-full max-w-xl mx-4 md:mx-auto flex flex-col justify-between gap-5 drop-shadow-xl">
-      <div className="signup-with flex justify-between">
-        <GoogleExternalSignup login={login} callback={signInWithGoogle} />
-        <AppleExternalSignup login={login} />
-      </div>
-      {/* <h1>User {state.user?.email}</h1> */}
-      <div className="relative flex py-2 items-center">
-        <div className="flex-grow border-t border-gray-300" />
-        <span className="flex-shrink mx-4 text-gray-600">OR</span>
-        <div className="flex-grow border-t border-gray-300" />
-      </div>
-      <TextInput
-        keyCallback={(e) => keyHandlerLogin(e)}
-        type="email"
-        value={email}
-        inputChange={setEmail}
-      />
-      <PasswordInput
-        keyCallback={(e) => keyHandlerLogin(e)}
-        password={password}
-        setPassword={setPassword}
-      />
-      <Button callback={() => firebaseLogin()}>Login</Button>
-      <small className="mx-auto">
-        {`Don't have an account?  `}
-        <button
-          type="button"
-          className="text-blue-500 hover:text-blue-700 ml-2"
-          tabIndex={0}
-          onClick={() => router.push('/signup')}
-          onKeyPress={() => router.push('/signup')}
-        >
-          Sign Up
-        </button>
-      </small>
-    </form>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={(values) => {
+        keyHandlerLogin(values);
+      }}
+    >
+      <Form className="bg-white rounded-lg p-5 min-w-[400px] w-full max-w-xl mx-4 md:mx-auto flex flex-col justify-between gap-5 drop-shadow-xl">
+        <div className="signup-with flex justify-between">
+          <GoogleExternalSignup login={login} callback={signInWithGoogle} />
+          <AppleExternalSignup login={login} />
+        </div>
+        {/* <h1>User {state.user?.email}</h1> */}
+        <div className="relative flex py-2 items-center">
+          <div className="flex-grow border-t border-gray-300" />
+          <span className="flex-shrink mx-4 text-gray-600">OR</span>
+          <div className="flex-grow border-t border-gray-300" />
+        </div>
+        <TextInput label="Your Email" name="email" type="email" placeholder="Your Email" />
+
+        <PasswordInput
+          name="password"
+          type="password"
+          label="Password"
+          placeholder="Your password here"
+        />
+        <Button type="submit">Sign In</Button>
+        <small className="mx-auto">
+          {`Don't have an account?  `}
+          <button
+            type="button"
+            className="text-blue-500 hover:text-blue-700 ml-2"
+            tabIndex={0}
+            onClick={() => router.push('/signup')}
+            onKeyPress={() => router.push('/signup')}
+          >
+            Sign Up
+          </button>
+        </small>
+      </Form>
+    </Formik>
   );
 };
