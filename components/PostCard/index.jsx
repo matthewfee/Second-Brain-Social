@@ -4,9 +4,13 @@ import { PostReacted } from './PostReacted';
 import { PostReactions } from './PostReactions';
 import { PostComments } from './PostComments';
 import { useStateValue } from '../../contexts';
+import { Comments } from './Comments';
 
 export const PostCard = ({ post, fetchPosts }) => {
   const { state } = useStateValue();
+
+  const deafultProfilePhoto =
+    'https://firebasestorage.googleapis.com/v0/b/meetmax-d2df1.appspot.com/o/images%2Fuser%20default.png2022-07-09T14%3A22%3A41.925Z?alt=media&token=dec4832e-eae6-4080-9f93-a54392885233';
 
   return (
     <div
@@ -17,7 +21,7 @@ export const PostCard = ({ post, fetchPosts }) => {
     w-full max-w-[512px]
     h-auto text-gray-600"
     >
-      <PostHeader headerImageSRC={post.images[0]} />
+      <PostHeader headerImageSRC={deafultProfilePhoto} />
       <p className="text-gray-600">{post.text}</p>
       <div className="flex gap-1">
         {post.images.length >= 1 &&
@@ -29,6 +33,7 @@ export const PostCard = ({ post, fetchPosts }) => {
       <PostReacted comments={post?.comments} likes={post?.likes} />
       <PostReactions post={post} />
       <PostComments postId={post.postId} user={state.user} fetchPosts={fetchPosts} />
+      {post.comments && <Comments comments={post.comments} />}
     </div>
   );
 };
