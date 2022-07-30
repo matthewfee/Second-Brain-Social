@@ -15,6 +15,7 @@ const Feed = () => {
   const router = useRouter();
 
   const fetchPosts = async () => {
+    console.log('FETCHING POSTS');
     const receivedPosts = await getPosts();
     const receivedPostsSortedByRecentDate = receivedPosts.sort(
       (a, b) => b.createdDate - a.createdDate

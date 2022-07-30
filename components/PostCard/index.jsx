@@ -42,6 +42,7 @@ export const PostCard = ({ post, fetchPosts }) => {
         post={post}
         toggleShowComments={toggleShowComments}
         showCommentsButton={post?.comments?.length > 0}
+        fetchPosts={fetchPosts}
       />
       <PostComments postId={post.postId} user={state.user} fetchPosts={fetchPosts} />
       {post.comments && showComments && <Comments comments={post.comments} />}

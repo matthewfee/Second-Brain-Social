@@ -76,6 +76,13 @@ export const likePost = async (post, userID) => {
     if (data.userLikes) {
       if (data?.userLikes?.includes(userID)) {
         console.log('user already liked post');
+
+        // remove like from post
+
+        await updateDoc(docRef, {
+          likes: increment(-1),
+          userLikes: [...data.userLikes.filter((item) => item !== userID)],
+        });
         return;
       }
     }
@@ -84,9 +91,10 @@ export const likePost = async (post, userID) => {
       likes: increment(1),
       userLikes: [...data.userLikes, userID],
     });
-  } else {
-    console.log('No post found');
+
+    return;
   }
+  console.log('No post found');
 };
 
 export const commentPost = async (commentText, postId, userId) => {
