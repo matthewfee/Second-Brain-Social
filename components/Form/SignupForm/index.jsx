@@ -8,7 +8,7 @@ import { Button } from '../../Button';
 import { DatePickerField } from '../../DatePicker';
 import { GenderPicker } from '../../GenderPicker';
 import { AppleExternalSignup, GoogleExternalSignup } from '../ExternalSignup';
-import { TextInput } from '../NameInput';
+import { TextInput } from '../TextInput';
 import { PasswordInput } from '../PasswordInput';
 import { useStateValue, setUser } from '../../../contexts';
 import { PROFILE_PICTURE_DEFAULT_URL } from '../../../constants/constants';

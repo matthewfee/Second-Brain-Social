@@ -25,7 +25,9 @@ export const DatePickerField = (props) => {
             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
           />
         </svg>
+
         <DatePicker
+          className="w-32 px-2 ml-2"
           {...field}
           {...props}
           startDate={new Date()}
@@ -33,6 +35,7 @@ export const DatePickerField = (props) => {
           onChange={(val) => {
             setFieldValue(field.name, val);
           }}
+          placeholderText="Birthday"
         />
       </div>
     </div>

@@ -13,7 +13,7 @@ import {
 } from 'firebase/auth';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-import { TextInput } from '../NameInput';
+import { TextInput } from '../TextInput';
 import { GoogleExternalSignup, AppleExternalSignup } from '../ExternalSignup';
 import { Button } from '../../Button';
 import { PasswordInput } from '../PasswordInput';
