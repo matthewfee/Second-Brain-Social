@@ -34,7 +34,7 @@ export const LoginForm = ({ login }) => {
     onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
-        // router.push('/feed');
+        router.push('/feed');
       } else {
         // console.log('LOGGED OUT');
       }
@@ -54,7 +54,7 @@ export const LoginForm = ({ login }) => {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [auth]);
 
   const signInWithGoogle = () => {
     console.log('SIGNING IN WITH GOOGLE');
