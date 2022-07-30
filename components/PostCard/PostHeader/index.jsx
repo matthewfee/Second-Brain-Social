@@ -1,6 +1,6 @@
 import { PostProfileImage } from '../PostProfileImage';
 
-export const PostHeader = ({ headerImageSRC }) => (
+export const PostHeader = ({ headerImageSRC, date }) => (
   // console.log('');
 
   <div className="flex justify-between items-center">
@@ -8,7 +8,7 @@ export const PostHeader = ({ headerImageSRC }) => (
       {headerImageSRC && <PostProfileImage imageSRC={headerImageSRC} />}
       <div className="text-xl">
         <p className="text-sm">Sepural Gallery</p>
-        <p className="text-gray-400 text-xs">15h. Public</p>
+        <p className="text-gray-400 text-xs">{date.toDate().toDateString()}</p>
       </div>
     </div>
     <svg

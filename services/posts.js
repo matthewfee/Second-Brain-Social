@@ -89,14 +89,16 @@ export const commentPost = async (commentText, postId, userId) => {
   const docRef = doc(db, 'posts', postId);
   const docSnap = await getDoc(docRef);
 
+  const commentDate = new Date();
+
   if (docSnap.exists()) {
     const data = docSnap.data();
 
     let { comments } = data;
     if (comments) {
-      comments.push({ comment: commentText, userId });
+      comments.push({ comment: commentText, userId, commentDate });
     } else {
-      comments = [{ comment: commentText, userId }];
+      comments = [{ comment: commentText, userId, commentDate }];
     }
 
     await updateDoc(docRef, {

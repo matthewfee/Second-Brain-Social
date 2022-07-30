@@ -13,8 +13,12 @@ export const Comment = ({ comment }) => {
     fetchUserThatCommented();
   }, []);
 
-  //   console.log('comment: ', comment);
-  console.log('userThatCommented: ', userThatCommented);
+  let commentTime = null;
+
+  if (comment.commentDate) {
+    commentTime = comment.commentDate.toDate().toDateString();
+    console.log(comment.commentDate.toDate().toDateString());
+  }
 
   return (
     <div className="flex gap-6 mx-2 my-4">
@@ -29,7 +33,7 @@ export const Comment = ({ comment }) => {
           </div>
           <div className="text-gray-600 bg-white w-full rounded-lg p-2">
             <div className="font-bold">{userThatCommented.name}</div>
-            <div className="text-gray-400 text-xs -mt-1">9h ago</div>
+            <div className="text-gray-400 text-xs -mt-1">{commentTime}</div>
             <div className="mt-2 text-sm">{comment.comment}</div>
           </div>
         </>
