@@ -56,6 +56,7 @@ export const createUser = async (user) => {
     dateOfBirth: user?.dateOfBirth || null,
     gender: user?.gender || null,
     profilePictureURL: user?.profilePictureURL || null,
+    email: user?.email || null,
   };
 
   if (user.email && user.password) {
