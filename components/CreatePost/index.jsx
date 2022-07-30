@@ -17,6 +17,7 @@ export const CreatePost = ({ fetchPosts }) => {
     emotion: '',
     createdDate: null,
     userLikes: [],
+    comments: [],
   });
 
   const [createPost, setCreatePost] = useState(false);
