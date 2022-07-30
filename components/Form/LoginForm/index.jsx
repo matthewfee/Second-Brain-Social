@@ -19,6 +19,7 @@ import { Button } from '../../Button';
 import { PasswordInput } from '../PasswordInput';
 import { auth } from '../../../services/firebase';
 import { useStateValue, setUser } from '../../../contexts';
+import { createUser } from '../../../services/users';
 
 export const LoginForm = ({ login }) => {
   const [email, setEmail] = useState('test@gmail.com');
@@ -33,6 +34,7 @@ export const LoginForm = ({ login }) => {
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
+        console.log('currentUSER', currentUser);
         setUser(currentUser);
         router.push('/feed');
       } else {
@@ -43,14 +45,18 @@ export const LoginForm = ({ login }) => {
 
   useEffect(() => {
     getRedirectResult(auth)
-      // .then((result) => {
-      // This gives you a Google Access Token. You can use it to access Google APIs.
-      // const credential = GoogleAuthProvider.credentialFromResult(result);
-      // const token = credential.accessToken;
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access Google APIs.
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential.accessToken;
 
-      // The signed-in user info.
-      // const { user } = result;
-      // })
+        // The signed-in user info.
+        const { user } = result;
+
+        console.log('AUTH USER', user);
+
+        createUser(user);
+      })
       .catch((error) => {
         console.error(error);
       });
@@ -59,14 +65,15 @@ export const LoginForm = ({ login }) => {
   const signInWithGoogle = () => {
     console.log('SIGNING IN WITH GOOGLE');
     signInWithRedirect(auth, provider)
-      // .then((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      // const credential = GoogleAuthProvider.credentialFromResult(result);
-      // const token = credential.accessToken;
-      // The signed-in user info.
-      // const { user } = result;
-      // ...
-      // })
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the ////Google API.
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential.accessToken;
+        // The signed-in user info.
+        // const { user } = result;
+        // console.log('AUTH USER', user);
+        // createUser(user);
+      })
       .catch((error) => {
         console.error(error);
         // Handle Errors here.

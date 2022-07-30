@@ -17,7 +17,7 @@ export const getUser = async (uid) => {
     }
     // doc.data() will be undefined in this case
     console.log('No user with is: ', uid);
-    return { empty: 'User not exist' };
+    return false;
   } catch (error) {
     console.log(error);
     throw new Error(error);
@@ -39,22 +39,37 @@ export const getUsers = async () => {
 
 // create a user
 export const createUser = async (user) => {
-  try {
-    const userData = await createUserWithEmailAndPassword(auth, user.email, user.password);
-    const userToSave = {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      dateOfBirth: user.dateOfBirth,
-      gender: user.gender,
-      profilePictureURL: user.profilePictureURL,
-    };
+  // check if user exists
 
-    await setDoc(doc(db, 'users', userData.user.uid), userToSave);
+  const userDoc = await getUser(user.uid);
 
-    return userToSave;
-  } catch (error) {
-    console.log(error.message);
-    return error.message;
+  console.log('USER DOC', userDoc);
+
+  if (userDoc) {
+    return;
+  }
+
+  const userToSave = {
+    displayName: user?.displayName || '',
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    dateOfBirth: user?.dateOfBirth || '',
+    gender: user?.gender || '',
+    profilePictureURL: user?.profilePictureURL || '',
+  };
+
+  if (user.email && user.password) {
+    try {
+      const userData = await createUserWithEmailAndPassword(auth, user.email, user.password);
+
+      await setDoc(doc(db, 'users', userData.user.uid), userToSave);
+    } catch (error) {
+      console.error(error.message);
+    }
+  } else {
+    console.log('CREATING AUTH USER', user);
+
+    await setDoc(doc(db, 'users', user.uid), userToSave);
   }
 };
 
