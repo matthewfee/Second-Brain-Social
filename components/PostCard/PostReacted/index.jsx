@@ -1,5 +1,3 @@
-import { PostProfileImage } from '../PostProfileImage';
-
 export const PostReacted = ({ comments }) => {
   const commentsString = (commentsData) => {
     if (!commentsData) {

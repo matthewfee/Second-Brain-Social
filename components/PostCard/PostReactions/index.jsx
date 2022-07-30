@@ -1,7 +1,7 @@
 import { likePost } from '../../../services/posts';
 import { useStateValue } from '../../../contexts';
 
-export const PostReactions = ({ post }) => {
+export const PostReactions = ({ post, toggleShowComments, showCommentsButton }) => {
   const { state } = useStateValue();
 
   const userId = state?.user?.uid;
@@ -49,23 +49,29 @@ export const PostReactions = ({ post }) => {
         {userHasLikedPost ? `Liked ` : `Like `}
         {postLikesString}
       </button>
-      <div className="flex gap-1 items-center hover:text-blue-500 cursor-pointer">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
+      {showCommentsButton && (
+        <button
+          type="button"
+          onClick={toggleShowComments}
+          className="flex gap-1 items-center hover:text-blue-500 cursor-pointer"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-          />
-        </svg>
-        Comments
-      </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+            />
+          </svg>
+          Comments
+        </button>
+      )}
       <div className="flex gap-1 items-center hover:text-blue-500 cursor-pointer">
         <svg
           id="Layer_1"

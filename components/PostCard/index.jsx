@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { PostHeader } from './PostHeader';
 import { PostImage } from './PostImage';
 import { PostReacted } from './PostReacted';
@@ -8,9 +9,15 @@ import { Comments } from './Comments';
 
 export const PostCard = ({ post, fetchPosts }) => {
   const { state } = useStateValue();
+  const [showComments, setShowComments] = useState(false);
 
   const deafultProfilePhoto =
     'https://firebasestorage.googleapis.com/v0/b/meetmax-d2df1.appspot.com/o/images%2Fuser%20default.png2022-07-09T14%3A22%3A41.925Z?alt=media&token=dec4832e-eae6-4080-9f93-a54392885233';
+
+  const toggleShowComments = () => {
+    console.log('TOGGLE SHOW COMMENTS');
+    setShowComments((prevState) => !prevState);
+  };
 
   return (
     <div
@@ -31,9 +38,13 @@ export const PostCard = ({ post, fetchPosts }) => {
           ))}
       </div>
       <PostReacted comments={post?.comments} likes={post?.likes} />
-      <PostReactions post={post} />
+      <PostReactions
+        post={post}
+        toggleShowComments={toggleShowComments}
+        showCommentsButton={post?.comments?.length > 0}
+      />
       <PostComments postId={post.postId} user={state.user} fetchPosts={fetchPosts} />
-      {post.comments && <Comments comments={post.comments} />}
+      {post.comments && showComments && <Comments comments={post.comments} />}
     </div>
   );
 };
