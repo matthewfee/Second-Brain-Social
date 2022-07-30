@@ -12,13 +12,15 @@ export const getUser = async (uid) => {
     const docSnap = await getDoc(userDocRef);
 
     if (docSnap.exists()) {
-      console.log('user data:', docSnap.data());
-    } else {
-      // doc.data() will be undefined in this case
-      console.log('No such document!');
+      console.log('auth: ', auth.currentUser);
+      return docSnap.data();
     }
+    // doc.data() will be undefined in this case
+    console.log('No user with is: ', uid);
+    return { empty: 'User not exist' };
   } catch (error) {
     console.log(error);
+    throw new Error(error);
   }
 };
 
@@ -39,13 +41,17 @@ export const getUsers = async () => {
 export const createUser = async (user) => {
   try {
     const userData = await createUserWithEmailAndPassword(auth, user.email, user.password);
-    await setDoc(doc(db, 'users', userData.user.uid), {
-      name: user.name,
+    const userToSave = {
+      firstName: user.firstName,
+      lastName: user.lastName,
       dateOfBirth: user.dateOfBirth,
       gender: user.gender,
-    });
+      profilePictureURL: user.profilePictureURL,
+    };
 
-    return userData.user;
+    await setDoc(doc(db, 'users', userData.user.uid), userToSave);
+
+    return userToSave;
   } catch (error) {
     console.log(error.message);
     return error.message;

@@ -24,7 +24,8 @@ export const SignupForm = ({ login }) => {
     const createdUser = await createUser({
       email: values.email,
       password: values.password,
-      name: `${values.firstName} ${values.lastName}`,
+      firstName: values.firstName,
+      lastName: values.lastName,
       dateOfBirth: values.dateOfBirth.toString(),
       gender: values.gender,
       profilePictureURL: PROFILE_PICTURE_DEFAULT_URL,

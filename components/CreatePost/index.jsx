@@ -58,8 +58,8 @@ export const CreatePost = ({ fetchPosts }) => {
     setImages(images?.concat(imageObject));
   };
 
-  const handleDeleteImage = (image) => {
-    const updatedImages = images.filter((i) => i.image !== image);
+  const handleDeleteImage = (imageBlob) => {
+    const updatedImages = images.filter((i) => i.imageBlob !== imageBlob);
     setImages(updatedImages);
   };
 
@@ -68,6 +68,7 @@ export const CreatePost = ({ fetchPosts }) => {
       const date = new Date();
       await addPost({ ...newPost, uid: state.user.uid, createdDate: date }, images);
       fetchPosts();
+      setNewPost({ text: '', image: null, emotion: '', createdDate: null, userLikes: [] });
       closeCreatePost();
     } else {
       // Notify ("Only registered userd can post here");
@@ -83,7 +84,7 @@ export const CreatePost = ({ fetchPosts }) => {
         mx-4 md:mx-auto flex 
         flex-col justify-between 
         gap-5 drop-shadow-xl
-        w-full max-w-[512px]
+        w-full max-w-[512px] lg:w-[500px]
         h-auto text-gray-600 my-0"
         >
           <div className="flex justify-between items-center">
@@ -150,7 +151,7 @@ export const CreatePost = ({ fetchPosts }) => {
               />
             ))}
           </div>
-          <div className="flex items-center gap-4 text-md">
+          <div className="flex items-center justify-between gap-4 text-md">
             {/* <div className="flex items-center gap-2 hover:text-blue-500 cursor-pointer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -168,12 +169,39 @@ export const CreatePost = ({ fetchPosts }) => {
               </svg>
               Live Video
             </div> */}
-            <div>
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-              <label
-                htmlFor="post-image"
-                className="flex items-center gap-2 hover:text-blue-500 cursor-pointer"
-              >
+            <div className="flex gap-4">
+              <div>
+                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                <label
+                  htmlFor="post-image"
+                  className="flex items-center gap-2 hover:text-blue-500 cursor-pointer"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                  Photo/Video
+                </label>
+                <input
+                  style={{ display: 'none' }}
+                  id="post-image"
+                  type="file"
+                  accept="image/*,video/*"
+                  name="image-file"
+                  onChange={handleFileInputChange}
+                />
+              </div>
+              <div className="flex items-center gap-2 hover:text-blue-500 cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
@@ -185,36 +213,11 @@ export const CreatePost = ({ fetchPosts }) => {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
-                </svg>
-                Photo/Video
-              </label>
-              <input
-                style={{ display: 'none' }}
-                id="post-image"
-                type="file"
-                accept="image/*,video/*"
-                name="image-file"
-                onChange={handleFileInputChange}
-              />
-            </div>
-            <div className="flex items-center gap-2 hover:text-blue-500 cursor-pointer">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>{' '}
-              Feeling
+                </svg>{' '}
+                Feeling
+              </div>
             </div>
             <div className="w-full md:w-24">
               <Button callback={handlePost}>Post</Button>

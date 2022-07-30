@@ -8,8 +8,9 @@ import {
   increment,
   updateDoc,
 } from 'firebase/firestore';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { storage, db } from './firebase';
+// import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { db } from './firebase';
+import { saveImages } from './utils';
 
 // collection ref
 const postsColRef = collection(db, 'posts');
@@ -37,14 +38,7 @@ export const getPosts = async () => {
 export const addPost = async (newPost, images) => {
   const postToAdd = newPost;
   try {
-    const imagesPath = await Promise.all(
-      images.map(async (image) => {
-        const imageRef = ref(storage, `images/${image.name + new Date().toISOString()}`);
-        await uploadBytes(imageRef, image.image);
-        const imageDownloadPath = await getDownloadURL(imageRef);
-        return imageDownloadPath;
-      })
-    );
+    const imagesPath = saveImages(images);
     postToAdd.images = imagesPath;
     const addedPost = await addDoc(postsColRef, postToAdd);
     return addedPost;
@@ -98,9 +92,12 @@ export const commentPost = async (commentText, postId, userId) => {
   if (docSnap.exists()) {
     const data = docSnap.data();
 
-    const comments = data.comment
-      ? data.comment.slice().push(commentText)
-      : [{ comment: commentText, userId }];
+    let { comments } = data;
+    if (comments) {
+      comments.push({ comment: commentText, userId });
+    } else {
+      comments = [{ comment: commentText, userId }];
+    }
 
     await updateDoc(docRef, {
       comments,

@@ -1,4 +1,5 @@
-export const PROFILE_PICTURE_DEFAULT_URL = 'https://i.imgur.com/IsKSffy.png';
+export const PROFILE_PICTURE_DEFAULT_URL =
+  'https://firebasestorage.googleapis.com/v0/b/meetmax-d2df1.appspot.com/o/images%2Fdefault%20image.jpeg?alt=media&token=02e39951-6834-4ffc-95c4-777ae56fc520';
 
 export const HEADER_IMAGE_URL =
   'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGZhY2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60';

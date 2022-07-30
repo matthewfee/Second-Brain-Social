@@ -17,6 +17,7 @@
     "react": "18.0.0",
     "react-datepicker": "^4.8.0",
     "react-dom": "18.0.0",
+    "react-spinners": "^0.13.3",
     "storybook": "^6.5.7",
     "yup": "^0.32.11"
   },
