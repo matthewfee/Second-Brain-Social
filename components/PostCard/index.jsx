@@ -24,7 +24,7 @@ export const PostCard = ({ post, fetchPosts }) => {
       <PostHeader headerImageSRC={deafultProfilePhoto} date={post?.createdDate} />
       <p className="text-gray-600">{post.text}</p>
       <div className="flex gap-1">
-        {post.images.length >= 1 &&
+        {post?.images?.length >= 1 &&
           post.images.map((image, i) => (
             // eslint-disable-next-line react/no-array-index-key
             <PostImage key={i} src={image} />

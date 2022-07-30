@@ -39,7 +39,11 @@ export const addPost = async (newPost, images) => {
   const postToAdd = newPost;
   try {
     const imagesPath = saveImages(images);
-    postToAdd.images = imagesPath;
+
+    if (postToAdd.images) {
+      postToAdd.images = imagesPath;
+    }
+
     const addedPost = await addDoc(postsColRef, postToAdd);
     return addedPost;
   } catch (error) {

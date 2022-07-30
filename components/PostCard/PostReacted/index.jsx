@@ -16,7 +16,7 @@ export const PostReacted = ({ comments }) => {
   return (
     <div className="flex justify-between relative">
       <div className="flex ">
-        <div className="">
+        {/* <div className="">
           <PostProfileImage imageSRC="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZmFjZXN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" />
         </div>
         <div className="absolute left-6">
@@ -24,7 +24,7 @@ export const PostReacted = ({ comments }) => {
         </div>
         <div className="absolute left-12">
           <PostProfileImage imageSRC="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZmFjZXN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" />
-        </div>
+        </div> */}
       </div>
       <div className="flex gap-4 ">
         <div className="">{commentsString(comments)}</div>
