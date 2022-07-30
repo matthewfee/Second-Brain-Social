@@ -37,7 +37,6 @@ export const SignupForm = ({ login }) => {
   const provider = new GoogleAuthProvider();
 
   const signInWithGoogle = () => {
-    console.log('SIGNING IN WITH GOOGLE');
     signInWithRedirect(auth, provider).catch((error) => {
       console.error(error);
     });

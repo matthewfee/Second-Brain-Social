@@ -24,9 +24,10 @@ import { createUser } from '../../../services/users';
 export const LoginForm = ({ login }) => {
   const [email, setEmail] = useState('test@gmail.com');
   const [password, setPassword] = useState('password');
-  // const [user, setUser] = useState({ email: 'NO EMAIL' });
 
-  const { dispatch } = useStateValue();
+  const { state, dispatch } = useStateValue();
+
+  console.log('USER STATE', state);
 
   const router = useRouter();
   const provider = new GoogleAuthProvider();
@@ -35,7 +36,7 @@ export const LoginForm = ({ login }) => {
     onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         console.log('currentUSER', currentUser);
-        setUser(currentUser);
+        dispatch(setUser(currentUser));
         router.push('/feed');
       } else {
         // console.log('LOGGED OUT');

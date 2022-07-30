@@ -12,14 +12,12 @@ export const getUser = async (uid) => {
     const docSnap = await getDoc(userDocRef);
 
     if (docSnap.exists()) {
-      console.log('auth: ', auth.currentUser);
       return docSnap.data();
     }
     // doc.data() will be undefined in this case
-    console.log('No user with is: ', uid);
+    console.log('No user with ID: ', uid);
     return false;
   } catch (error) {
-    console.log(error);
     throw new Error(error);
   }
 };
@@ -29,11 +27,10 @@ export const getUsers = async () => {
   try {
     onSnapshot(usersColRef, (snapshot) => {
       const users = snapshot.docs.map((snapshotDoc) => snapshotDoc.data());
-      console.log('users in services: ', users);
       return users;
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -42,8 +39,6 @@ export const createUser = async (user) => {
   // check if user exists
 
   const userDoc = await getUser(user.uid);
-
-  console.log('USER DOC', userDoc);
 
   if (userDoc) {
     return;
@@ -68,8 +63,6 @@ export const createUser = async (user) => {
       console.error(error.message);
     }
   } else {
-    console.log('CREATING AUTH USER', user);
-
     await setDoc(doc(db, 'users', user.uid), userToSave);
   }
 };

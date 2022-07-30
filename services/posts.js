@@ -71,12 +71,8 @@ export const likePost = async (post, userID) => {
   if (docSnap.exists()) {
     const data = docSnap.data();
 
-    console.log('postdata', data, userID);
-
     if (data.userLikes) {
       if (data?.userLikes?.includes(userID)) {
-        console.log('user already liked post');
-
         // remove like from post
 
         await updateDoc(docRef, {

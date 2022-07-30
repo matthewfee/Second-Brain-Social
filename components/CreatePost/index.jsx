@@ -45,8 +45,6 @@ export const CreatePost = ({ fetchPosts }) => {
 
   useEffect(() => {}, [newPost]);
 
-  console.log('USER STATE', state);
-
   const handleFileInputChange = (e) => {
     if (!e.target.files?.length) {
       return;
