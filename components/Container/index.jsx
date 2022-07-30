@@ -42,7 +42,7 @@ export const Container = ({ children }) => {
             />
           </svg>
 
-          <div className="logo-title ml-2.5">Meetmax</div>
+          <div className="logo-title ml-2.5">Second Brain</div>
         </div>
         {isLoggedIn && (
           <div className="login-info-container flex">
