@@ -28,7 +28,7 @@ export const PostCard = ({ post, fetchPosts }) => {
     w-full max-w-[512px]
     h-auto text-gray-600"
     >
-      <PostHeader headerImageSRC={deafultProfilePhoto} date={post?.createdDate} />
+      <PostHeader headerImageSRC={deafultProfilePhoto} date={post?.createdDate} post={post}/>
       <p className="text-gray-600">{post.text}</p>
       <div className="flex gap-1">
         {post?.images?.length >= 1 &&

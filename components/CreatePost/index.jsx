@@ -14,10 +14,11 @@ export const CreatePost = ({ fetchPosts }) => {
   const [newPost, setNewPost] = useState({
     text: '',
     image: null,
-    emotion: '',
     createdDate: null,
+    emotion: '',
     userLikes: [],
     comments: [],
+    displayName: state.user.displayName || '',
   });
 
   const [createPost, setCreatePost] = useState(false);
@@ -43,6 +44,8 @@ export const CreatePost = ({ fetchPosts }) => {
   };
 
   useEffect(() => {}, [newPost]);
+
+  console.log('USER STATE', state);
 
   const handleFileInputChange = (e) => {
     if (!e.target.files?.length) {

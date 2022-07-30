@@ -1,6 +1,6 @@
 import { PostProfileImage } from '../PostProfileImage';
 
-export const PostHeader = ({ headerImageSRC, date }) => {
+export const PostHeader = ({ headerImageSRC, date, post }) => {
   let dateTime = null;
 
   if (date) {
@@ -14,7 +14,7 @@ export const PostHeader = ({ headerImageSRC, date }) => {
       <div className="flex items-center gap-4">
         {headerImageSRC && <PostProfileImage imageSRC={headerImageSRC} />}
         <div className="text-xl">
-          <p className="text-sm">Sepural Gallery</p>
+          <p className="text-sm">{post?.displayName}</p>
           <p className="text-gray-400 text-xs">{dateTime}</p>
         </div>
       </div>

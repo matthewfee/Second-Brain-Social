@@ -38,9 +38,9 @@ export const getPosts = async () => {
 export const addPost = async (newPost, images) => {
   const postToAdd = newPost;
   try {
-    const imagesPath = saveImages(images);
+    const imagesPath = await saveImages(images);
 
-    if (postToAdd.images) {
+    if (images) {
       postToAdd.images = imagesPath;
     }
 
