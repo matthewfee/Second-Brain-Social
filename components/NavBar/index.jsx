@@ -30,7 +30,7 @@ export const NavBar = () => (
         <Notifications />
       </div>
       <div className=" hidden lg:flex lg:align-top lg:contents logo text-[#4E5D78] font-bold text-2xl flex">
-        <div className="logo-title ml-2.5">Meetmax</div>
+        <div className="logo-title ml-2.5">Second Brain</div>
         <svg
           width="26"
           height="26"
