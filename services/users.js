@@ -50,12 +50,12 @@ export const createUser = async (user) => {
   }
 
   const userToSave = {
-    displayName: user?.displayName || '',
-    firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
-    dateOfBirth: user?.dateOfBirth || '',
-    gender: user?.gender || '',
-    profilePictureURL: user?.profilePictureURL || '',
+    displayName: user?.displayName || null,
+    firstName: user?.firstName || null,
+    lastName: user?.lastName || null,
+    dateOfBirth: user?.dateOfBirth || null,
+    gender: user?.gender || null,
+    profilePictureURL: user?.profilePictureURL || null,
   };
 
   if (user.email && user.password) {
