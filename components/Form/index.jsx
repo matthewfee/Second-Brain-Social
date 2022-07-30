@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useRouter } from 'next/router';
-import { TextInput } from './NameInput';
+import { TextInput } from './TextInput';
 import { GoogleExternalSignup, AppleExternalSignup } from './ExternalSignup';
 import { Button } from '../Button';
 import { PasswordInput } from './PasswordInput';

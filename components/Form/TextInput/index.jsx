@@ -24,7 +24,7 @@ export const TextInput = ({ type, ...props }) => {
             <path d="M9.5 15a3.5 3.5 0 0 0 5 0" />
           </svg>
           <input
-            className="outline-none pl-2 w-full"
+            className="outline-none pl-2 w-full bg-none"
             type="text"
             placeholder={props.placeholder}
             {...field}
@@ -53,7 +53,7 @@ export const TextInput = ({ type, ...props }) => {
           <path d="M16 12v1.5a2.5 2.5 0 0 0 5 0v-1.5a9 9 0 1 0 -5.5 8.28" />
         </svg>
         <input
-          className="outline-none pl-2 w-full"
+          className="outline-none pl-2 w-full sha" 
           type="email"
           placeholder={props.placeholder}
           {...field}

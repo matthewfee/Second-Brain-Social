@@ -1,4 +1,4 @@
-export { TextInput } from './Form/NameInput';
+export { TextInput } from './Form/TextInput';
 export { Title } from './Title';
 export { Container } from './Container';
 export { Form } from './Form';
