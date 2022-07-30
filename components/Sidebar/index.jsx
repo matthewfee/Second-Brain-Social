@@ -3,13 +3,13 @@ import { useRouter } from 'next/router';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../services/firebase';
 import {
-  earthSVG,
+  // earthSVG,
   feedSVG,
-  communitySVG,
-  messageSVG,
-  notificationSVG,
+  // communitySVG,
+  // messageSVG,
+  // notificationSVG,
   userSVG,
-  settingsSVG,
+  // settingsSVG,
   logoutSVG,
 } from './SVGs';
 
