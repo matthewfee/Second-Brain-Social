@@ -7,7 +7,7 @@ import { createUser } from '../../../services/users';
 import { Button } from '../../Button';
 import { DatePickerField } from '../../DatePicker';
 import { GenderPicker } from '../../GenderPicker';
-import { AppleExternalSignup, GoogleExternalSignup } from '../ExternalSignup';
+import { GithubExternalSignup, GoogleExternalSignup } from '../ExternalSignup';
 import { TextInput } from '../TextInput';
 import { PasswordInput } from '../PasswordInput';
 import { useStateValue, setUser } from '../../../contexts';
@@ -82,7 +82,7 @@ export const SignupForm = ({ login }) => {
       <Form className="bg-white rounded-lg p-5 min-w-[400px] w-full max-w-xl mx-4 md:mx-auto flex flex-col justify-between gap-5 drop-shadow-xl">
         <div className="signup-with flex justify-between">
           <GoogleExternalSignup login={login} callback={signInWithGoogle} />
-          <AppleExternalSignup login={login} />
+          <GithubExternalSignup login={login} />
         </div>
         <div className="relative flex py-2 items-center">
           <div className="flex-grow border-t border-gray-300" />
