@@ -11,9 +11,6 @@ export const PostCard = ({ post, fetchPosts }) => {
   const { state } = useStateValue();
   const [showComments, setShowComments] = useState(false);
 
-  const deafultProfilePhoto =
-    'https://firebasestorage.googleapis.com/v0/b/meetmax-d2df1.appspot.com/o/images%2Fuser%20default.png2022-07-09T14%3A22%3A41.925Z?alt=media&token=dec4832e-eae6-4080-9f93-a54392885233';
-
   const toggleShowComments = () => {
     console.log('TOGGLE SHOW COMMENTS');
     setShowComments((prevState) => !prevState);
@@ -28,7 +25,11 @@ export const PostCard = ({ post, fetchPosts }) => {
     w-full max-w-[512px]
     h-auto text-gray-600"
     >
-      <PostHeader headerImageSRC={deafultProfilePhoto} date={post?.createdDate} post={post}/>
+      <PostHeader
+        headerImageSRC={post.user.profilePictureURL}
+        date={post?.createdDate}
+        post={post}
+      />
       <p className="text-gray-600">{post.text}</p>
       <div className="flex gap-1">
         {post?.images?.length >= 1 &&

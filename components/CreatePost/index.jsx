@@ -21,6 +21,8 @@ export const CreatePost = ({ fetchPosts }) => {
     displayName: state.user.displayName || '',
   });
 
+  console.log('state: ', state);
+
   const [createPost, setCreatePost] = useState(false);
 
   const router = useRouter();
@@ -67,10 +69,22 @@ export const CreatePost = ({ fetchPosts }) => {
 
   const handlePost = async () => {
     if (state.user) {
+      console.log('state.user: ', state.user);
       const date = new Date();
-      await addPost({ ...newPost, uid: state.user.uid, createdDate: date }, images);
+      const post = {
+        ...newPost,
+        user: {
+          uid: state.user.uid,
+          displayName: state.user.displayName,
+          profilePictureURL: state.user.profilePictureURL,
+        },
+        createdDate: date,
+      };
+
+      await addPost(post, images);
       fetchPosts();
       setNewPost({ text: '', image: null, emotion: '', createdDate: null, userLikes: [] });
+      setImages([]);
       closeCreatePost();
     } else {
       // Notify ("Only registered userd can post here");

@@ -37,6 +37,7 @@ export const getPosts = async () => {
 // get collection data
 export const addPost = async (newPost, images) => {
   const postToAdd = newPost;
+  console.log('postToAdd: ', postToAdd);
   try {
     const imagesPath = await saveImages(images);
 

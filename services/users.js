@@ -15,8 +15,7 @@ export const getUser = async (uid) => {
       return docSnap.data();
     }
     // doc.data() will be undefined in this case
-    console.log('No user with ID: ', uid);
-    return false;
+    return { empty: 'User not exist' };
   } catch (error) {
     throw new Error(error);
   }
@@ -36,8 +35,6 @@ export const getUsers = async () => {
 
 // create a user
 export const createUser = async (user) => {
-  // check if user exists
-
   const userDoc = await getUser(user.uid);
 
   if (userDoc) {
@@ -45,7 +42,7 @@ export const createUser = async (user) => {
   }
 
   const userToSave = {
-    displayName: user?.displayName || null,
+    displayName: user?.displayName || `${user.firstName} ${user.lasttName}`,
     firstName: user?.firstName || null,
     lastName: user?.lastName || null,
     dateOfBirth: user?.dateOfBirth || null,
@@ -63,6 +60,7 @@ export const createUser = async (user) => {
       console.error(error.message);
     }
   } else {
+    // this is for github and google signin, so user is created in collection
     await setDoc(doc(db, 'users', user.uid), userToSave);
   }
 };
