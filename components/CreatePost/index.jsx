@@ -78,6 +78,17 @@ export const CreatePost = ({ fetchPosts }) => {
     }
   };
 
+  const handleKeyUp = (e) => {
+    if (e.key === 'Enter') {
+      if (createPost) {
+        console.log('handling Post');
+        handlePost();
+      } else {
+        openCreatePost();
+      }
+    }
+  };
+
   if (createPost) {
     return (
       <Modal closeModal={closeCreatePost}>
@@ -142,7 +153,7 @@ export const CreatePost = ({ fetchPosts }) => {
           <hr className="border border-gray-300" />
           <div className="flex justify-between">
             <PostProfileImage imageSRC={HEADER_IMAGE_URL} />
-            <PostInput text={newPost.text} inputChange={handleTextChange} />
+            <PostInput text={newPost.text} inputChange={handleTextChange} onKeyUp={handleKeyUp} />
           </div>
           <div className="flex gap-2">
             {images?.map((image) => (
@@ -240,7 +251,12 @@ export const CreatePost = ({ fetchPosts }) => {
     >
       <div className="flex justify-between items-center">
         <PostProfileImage imageSRC={HEADER_IMAGE_URL} />
-        <PostInput size="small" text={newPost?.text} inputChange={handleTextChange} />
+        <PostInput
+          size="small"
+          text={newPost?.text}
+          inputChange={handleTextChange}
+          onKeyUp={handleKeyUp}
+        />
       </div>
       <div className="flex flex-row-reverse">
         <div className="w-24">
