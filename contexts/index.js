@@ -1,2 +1,2 @@
-export { reducer, setUser, setModal } from './reducer';
+export { reducer, setUser, setModal, setAlert } from './reducer';
 export { useStateValue } from './StateContext';
