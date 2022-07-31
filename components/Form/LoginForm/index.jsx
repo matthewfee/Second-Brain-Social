@@ -114,6 +114,9 @@ export const LoginForm = ({ login }) => {
       router.push('/feed');
     } catch (error) {
       console.log(error.message);
+      if (error.message.includes('user-not-found')) {
+        router.push('/signup');
+      }
     }
   };
 
