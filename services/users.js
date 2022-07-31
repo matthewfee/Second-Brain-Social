@@ -17,7 +17,6 @@ export const getUser = async (uid) => {
     // doc.data() will be undefined in this case
     return { empty: 'User not exist' };
   } catch (error) {
-    console.log(error);
     throw new Error(error);
   }
 };
@@ -27,33 +26,42 @@ export const getUsers = async () => {
   try {
     onSnapshot(usersColRef, (snapshot) => {
       const users = snapshot.docs.map((snapshotDoc) => snapshotDoc.data());
-      console.log('users in services: ', users);
       return users;
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
 // create a user
 export const createUser = async (user) => {
-  try {
-    const userData = await createUserWithEmailAndPassword(auth, user.email, user.password);
-    const userToSave = {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      displayName: `${user.firstName} ${user.lasttName}`,
-      dateOfBirth: user.dateOfBirth,
-      gender: user.gender,
-      profilePictureURL: user.profilePictureURL,
-    };
+  const userDoc = await getUser(user.uid);
 
-    await setDoc(doc(db, 'users', userData.user.uid), userToSave);
+  if (userDoc) {
+    return;
+  }
 
-    return userToSave;
-  } catch (error) {
-    console.log(error.message);
-    return error.message;
+  const userToSave = {
+    displayName: user?.displayName || `${user.firstName} ${user.lasttName}`,
+    firstName: user?.firstName || null,
+    lastName: user?.lastName || null,
+    dateOfBirth: user?.dateOfBirth || null,
+    gender: user?.gender || null,
+    profilePictureURL: user?.profilePictureURL || null,
+    email: user?.email || null,
+  };
+
+  if (user.email && user.password) {
+    try {
+      const userData = await createUserWithEmailAndPassword(auth, user.email, user.password);
+
+      await setDoc(doc(db, 'users', userData.user.uid), userToSave);
+    } catch (error) {
+      console.error(error.message);
+    }
+  } else {
+    // this is for github and google signin, so user is created in collection
+    await setDoc(doc(db, 'users', user.uid), userToSave);
   }
 };
 

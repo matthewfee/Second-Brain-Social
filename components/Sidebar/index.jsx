@@ -3,13 +3,13 @@ import { useRouter } from 'next/router';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../services/firebase';
 import {
-  earthSVG,
+  // earthSVG,
   feedSVG,
-  communitySVG,
-  messageSVG,
-  notificationSVG,
+  // communitySVG,
+  // messageSVG,
+  // notificationSVG,
   userSVG,
-  settingsSVG,
+  // settingsSVG,
   logoutSVG,
 } from './SVGs';
 
@@ -23,22 +23,22 @@ export const Sidebar = () => {
 
   const navs = [
     { name: 'Feed', path: '/', comp: feedSVG, notification: 0 },
-    {
-      name: 'My Community',
-      path: '/community',
-      comp: communitySVG,
-      notification: 0,
-    },
-    { name: 'Messages', path: '/messages', comp: messageSVG, notification: 0 },
-    {
-      name: 'Notification',
-      path: '/notification',
-      comp: notificationSVG,
-      notification: 2,
-    },
-    { name: 'Explore', path: '/explore', comp: earthSVG, notification: 0 },
+    // {
+    //   name: 'My Community',
+    //   path: '/community',
+    //   comp: communitySVG,
+    //   notification: 0,
+    // },
+    // { name: 'Messages', path: '/messages', comp: messageSVG, notification: 0 },
+    // // {
+    //   name: 'Notification',
+    //   path: '/notification',
+    //   comp: notificationSVG,
+    //   notification: 2,
+    // },
+    // { name: 'Explore', path: '/explore', comp: earthSVG, notification: 0 },
     { name: 'Profile', path: '/profile', comp: userSVG, notification: 0 },
-    { name: 'Settings', path: '/settings', comp: settingsSVG, notification: 0 },
+    // { name: 'Settings', path: '/settings', comp: settingsSVG, notification: 0 },
     { name: 'Logout', path: '/login', comp: logoutSVG, notification: 0, callback: firebaseLogout },
   ];
 

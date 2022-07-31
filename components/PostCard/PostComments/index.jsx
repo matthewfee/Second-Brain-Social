@@ -15,7 +15,7 @@ export const PostComments = ({ postId, user, fetchPosts }) => {
   return (
     <div className="flex items-center justify-between gap-4">
       <div className="">
-        <PostProfileImage imageSRC="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZmFjZXN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" />
+        {user.profilePictureURL && <PostProfileImage imageSRC={user.profilePictureURL} />}
       </div>
       <div className="flex-1">
         <PostComment setCommentText={setCommentText} commentText={commentText} />

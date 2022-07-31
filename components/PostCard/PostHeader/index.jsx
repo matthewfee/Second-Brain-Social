@@ -18,7 +18,7 @@ export const PostHeader = ({ headerImageSRC, date, post }) => {
           <p className="text-gray-400 text-xs">{dateTime}</p>
         </div>
       </div>
-      <svg
+      {/* <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-4 w-4 hover:text-blue-500 cursor-pointer"
         fill="none"
@@ -31,7 +31,7 @@ export const PostHeader = ({ headerImageSRC, date, post }) => {
           strokeLinejoin="round"
           d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
         />
-      </svg>
+      </svg> */}
     </div>
   );
 };

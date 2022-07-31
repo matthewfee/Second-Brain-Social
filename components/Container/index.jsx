@@ -2,6 +2,7 @@
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { HEADER_IMAGE_URL } from '../../constants/constants';
 import { auth } from '../../services/firebase';
 import { MyImage } from '../MyImage';
@@ -42,7 +43,11 @@ export const Container = ({ children }) => {
             />
           </svg>
 
-          <div className="logo-title ml-2.5">Second Brain</div>
+          <Link className="logo-title ml-2.5" href="/">
+            <span className="pl-4 cursor-pointer">Second Brain</span>
+          </Link>
+          {/* 
+          <div className="logo-title ml-2.5">Second Brain</div> */}
         </div>
         {isLoggedIn && (
           <div className="login-info-container flex">

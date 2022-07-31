@@ -10,16 +10,18 @@ import {
   GoogleAuthProvider,
   signInWithRedirect,
   getRedirectResult,
+  GithubAuthProvider,
+  fetch,
 } from 'firebase/auth';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 import { TextInput } from '../TextInput';
-import { GoogleExternalSignup, AppleExternalSignup } from '../ExternalSignup';
+import { GoogleExternalSignup, GithubExternalSignup } from '../ExternalSignup';
 import { Button } from '../../Button';
 import { PasswordInput } from '../PasswordInput';
 import { auth } from '../../../services/firebase';
 import { useStateValue, setUser } from '../../../contexts';
-import { getUser } from '../../../services/users';
+import { getUser, createUser } from '../../../services/users';
 
 export const LoginForm = ({ login }) => {
   const { dispatch } = useStateValue();
@@ -27,10 +29,13 @@ export const LoginForm = ({ login }) => {
   const router = useRouter();
   const provider = new GoogleAuthProvider();
 
+  const githubProvider = new GithubAuthProvider();
+
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        setUser(currentUser);
+        console.log('currentUSER', currentUser);
+        dispatch(setUser(currentUser));
         router.push('/feed');
       } else {
         // console.log('LOGGED OUT');
@@ -40,30 +45,42 @@ export const LoginForm = ({ login }) => {
 
   useEffect(() => {
     getRedirectResult(auth)
-      // .then((result) => {
-      // This gives you a Google Access Token. You can use it to access Google APIs.
-      // const credential = GoogleAuthProvider.credentialFromResult(result);
-      // const token = credential.accessToken;
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access Google APIs.
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential.accessToken;
 
-      // The signed-in user info.
-      // const { user } = result;
-      // })
+        // The signed-in user info.
+        const { user } = result;
+
+        console.log('AUTH USER', user);
+
+        createUser(user);
+      })
       .catch((error) => {
         console.error(error);
+        console.log('FIREBASE ERROR', error);
+        // if (
+        //   error.email &&
+        //   error.credential &&
+        //   error.code === 'auth/account-exists-with-different-credential'
+        // ) {
+        //   console.log('ERROR WITH SIGNIN');
+        // }
       });
   }, [auth]);
 
   const signInWithGoogle = () => {
-    console.log('SIGNING IN WITH GOOGLE');
     signInWithRedirect(auth, provider)
-      // .then((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      // const credential = GoogleAuthProvider.credentialFromResult(result);
-      // const token = credential.accessToken;
-      // The signed-in user info.
-      // const { user } = result;
-      // ...
-      // })
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the ////Google API.
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential.accessToken;
+        // The signed-in user info.
+        // const { user } = result;
+        // console.log('AUTH USER', user);
+        // createUser(user);
+      })
       .catch((error) => {
         console.error(error);
         // Handle Errors here.
@@ -77,6 +94,14 @@ export const LoginForm = ({ login }) => {
       });
   };
 
+  const signInWithGithub = () => {
+    signInWithRedirect(auth, githubProvider)
+      .then((result) => {})
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const firebaseLogin = async (values) => {
     try {
       const userData = await signInWithEmailAndPassword(auth, values.email, values.password);
@@ -85,6 +110,9 @@ export const LoginForm = ({ login }) => {
       router.push('/feed');
     } catch (error) {
       console.log(error.message);
+      if (error.message.includes('user-not-found')) {
+        router.push('/signup');
+      }
     }
   };
 
@@ -112,7 +140,7 @@ export const LoginForm = ({ login }) => {
       <Form className="bg-white rounded-lg p-5 min-w-[400px] w-full max-w-xl mx-4 md:mx-auto flex flex-col justify-between gap-5 drop-shadow-xl">
         <div className="signup-with flex justify-between">
           <GoogleExternalSignup login={login} callback={signInWithGoogle} />
-          <AppleExternalSignup login={login} />
+          <GithubExternalSignup login={login} callback={signInWithGithub} />
         </div>
         {/* <h1>User {state.user?.email}</h1> */}
         <div className="relative flex py-2 items-center">
