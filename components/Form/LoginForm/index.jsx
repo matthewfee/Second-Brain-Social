@@ -19,12 +19,9 @@ import { Button } from '../../Button';
 import { PasswordInput } from '../PasswordInput';
 import { auth } from '../../../services/firebase';
 import { useStateValue, setUser } from '../../../contexts';
+import { getUser } from '../../../services/users';
 
 export const LoginForm = ({ login }) => {
-  const [email, setEmail] = useState('test@gmail.com');
-  const [password, setPassword] = useState('password');
-  // const [user, setUser] = useState({ email: 'NO EMAIL' });
-
   const { dispatch } = useStateValue();
 
   const router = useRouter();
@@ -80,18 +77,15 @@ export const LoginForm = ({ login }) => {
       });
   };
 
-  const firebaseLogin = async () => {
+  const firebaseLogin = async (values) => {
     try {
-      const userData = await signInWithEmailAndPassword(auth, email, password);
-      dispatch(setUser(userData.user));
+      const userData = await signInWithEmailAndPassword(auth, values.email, values.password);
+      const userCol = await getUser(userData.user.uid);
+      dispatch(setUser({ ...userCol, uid: userData.user.uid }));
       router.push('/feed');
     } catch (error) {
       console.log(error.message);
     }
-  };
-
-  const keyHandlerLogin = (e) => {
-    firebaseLogin();
   };
 
   const initialValues = {
@@ -112,7 +106,7 @@ export const LoginForm = ({ login }) => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        keyHandlerLogin(values);
+        firebaseLogin(values);
       }}
     >
       <Form className="bg-white rounded-lg p-5 min-w-[400px] w-full max-w-xl mx-4 md:mx-auto flex flex-col justify-between gap-5 drop-shadow-xl">

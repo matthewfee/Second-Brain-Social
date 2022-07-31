@@ -12,11 +12,9 @@ export const getUser = async (uid) => {
     const docSnap = await getDoc(userDocRef);
 
     if (docSnap.exists()) {
-      console.log('auth: ', auth.currentUser);
       return docSnap.data();
     }
     // doc.data() will be undefined in this case
-    console.log('No user with is: ', uid);
     return { empty: 'User not exist' };
   } catch (error) {
     console.log(error);
@@ -44,6 +42,7 @@ export const createUser = async (user) => {
     const userToSave = {
       firstName: user.firstName,
       lastName: user.lastName,
+      displayName: `${user.firstName} ${user.lasttName}`,
       dateOfBirth: user.dateOfBirth,
       gender: user.gender,
       profilePictureURL: user.profilePictureURL,

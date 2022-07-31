@@ -17,7 +17,6 @@ export const Comment = ({ comment }) => {
 
   if (comment.commentDate) {
     commentTime = comment.commentDate.toDate().toDateString();
-    console.log(comment.commentDate.toDate().toDateString());
   }
 
   return (
