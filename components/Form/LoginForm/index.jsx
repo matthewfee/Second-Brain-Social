@@ -32,10 +32,12 @@ export const LoginForm = ({ login }) => {
   const githubProvider = new GithubAuthProvider();
 
   useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
+    onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         console.log('currentUSER', currentUser);
         dispatch(setUser(currentUser));
+        const userCol = await getUser(currentUser.user.uid);
+        dispatch(setUser({ ...userCol, uid: currentUser.user.uid }));
         router.push('/feed');
       } else {
         // console.log('LOGGED OUT');
