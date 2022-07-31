@@ -48,7 +48,7 @@ export const addPost = async (newPost, images) => {
     const addedPost = await addDoc(postsColRef, postToAdd);
     return addedPost;
   } catch (error) {
-    console.error(error);
+    console.error('ADD POST ERROR', error);
     return {};
   }
 };

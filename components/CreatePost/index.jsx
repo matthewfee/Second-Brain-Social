@@ -74,9 +74,9 @@ export const CreatePost = ({ fetchPosts }) => {
       const post = {
         ...newPost,
         user: {
-          uid: state.user.uid,
-          displayName: state.user.displayName,
-          profilePictureURL: state.user.profilePictureURL,
+          uid: state.user.uid || null,
+          displayName: state.user.displayName || null,
+          profilePictureURL: state.user.profilePictureURL || null,
         },
         createdDate: date,
       };
