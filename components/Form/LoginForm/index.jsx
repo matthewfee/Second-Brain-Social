@@ -10,11 +10,13 @@ import {
   GoogleAuthProvider,
   signInWithRedirect,
   getRedirectResult,
+  GithubAuthProvider,
+  fetch,
 } from 'firebase/auth';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 import { TextInput } from '../TextInput';
-import { GoogleExternalSignup, AppleExternalSignup } from '../ExternalSignup';
+import { GoogleExternalSignup, GithubExternalSignup } from '../ExternalSignup';
 import { Button } from '../../Button';
 import { PasswordInput } from '../PasswordInput';
 import { auth } from '../../../services/firebase';
@@ -31,6 +33,8 @@ export const LoginForm = ({ login }) => {
 
   const router = useRouter();
   const provider = new GoogleAuthProvider();
+
+  const githubProvider = new GithubAuthProvider();
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -60,11 +64,18 @@ export const LoginForm = ({ login }) => {
       })
       .catch((error) => {
         console.error(error);
+        console.log('FIREBASE ERROR', error);
+        // if (
+        //   error.email &&
+        //   error.credential &&
+        //   error.code === 'auth/account-exists-with-different-credential'
+        // ) {
+        //   console.log('ERROR WITH SIGNIN');
+        // }
       });
   }, [auth]);
 
   const signInWithGoogle = () => {
-    console.log('SIGNING IN WITH GOOGLE');
     signInWithRedirect(auth, provider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the ////Google API.
@@ -85,6 +96,14 @@ export const LoginForm = ({ login }) => {
         // /The AuthCredential type that was used.
         // const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
+      });
+  };
+
+  const signInWithGithub = () => {
+    signInWithRedirect(auth, githubProvider)
+      .then((result) => {})
+      .catch((error) => {
+        console.error(error);
       });
   };
 
@@ -126,7 +145,7 @@ export const LoginForm = ({ login }) => {
       <Form className="bg-white rounded-lg p-5 min-w-[400px] w-full max-w-xl mx-4 md:mx-auto flex flex-col justify-between gap-5 drop-shadow-xl">
         <div className="signup-with flex justify-between">
           <GoogleExternalSignup login={login} callback={signInWithGoogle} />
-          <AppleExternalSignup login={login} />
+          <GithubExternalSignup login={login} callback={signInWithGithub} />
         </div>
         {/* <h1>User {state.user?.email}</h1> */}
         <div className="relative flex py-2 items-center">
