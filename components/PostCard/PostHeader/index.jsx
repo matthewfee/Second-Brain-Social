@@ -1,37 +1,33 @@
+// import { MyImage } from '../../MyImage';
+import { useState } from 'react';
+import Image from 'next/image';
 import { PostProfileImage } from '../PostProfileImage';
 
 export const PostHeader = ({ headerImageSRC, date, post }) => {
   let dateTime = null;
+  // eslint-disable-next-line no-unused-vars
+  const [svgSource, setSvgSource] = useState('/icons/threeDots.svg');
 
   if (date) {
     dateTime = date.toDate().toDateString();
   }
 
   return (
-    // console.log('');
-
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-4">
         {headerImageSRC && <PostProfileImage imageSRC={headerImageSRC} />}
         <div className="text-xl">
-          <p className="text-sm">{post?.displayName}</p>
+          <p className="text-sm">{post?.user.displayName}</p>
           <p className="text-gray-400 text-xs">{dateTime}</p>
         </div>
       </div>
-      {/* <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-4 w-4 hover:text-blue-500 cursor-pointer"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={2}
+      <div
+        className="hover:text-blue-400 cursor-pointer"
+        onMouseEnter={() => setSvgSource('/icons/blueThreeDots.svg')}
+        onMouseLeave={() => setSvgSource('/icons/threeDots.svg')}
       >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-        />
-      </svg> */}
+        <Image src={svgSource} width={20} height={20} alt="menu" className=" " />
+      </div>
     </div>
   );
 };

@@ -20,11 +20,11 @@ import { GoogleExternalSignup, GithubExternalSignup } from '../ExternalSignup';
 import { Button } from '../../Button';
 import { PasswordInput } from '../PasswordInput';
 import { auth } from '../../../services/firebase';
-import { useStateValue, setUser } from '../../../contexts';
+import { useStateValue, setUser, setAlert } from '../../../contexts';
 import { getUser, createUser } from '../../../services/users';
 
 export const LoginForm = ({ login }) => {
-  const { dispatch } = useStateValue();
+  const { state, dispatch } = useStateValue();
 
   const router = useRouter();
   const provider = new GoogleAuthProvider();
@@ -70,6 +70,20 @@ export const LoginForm = ({ login }) => {
       });
   }, [auth]);
 
+  const notify = (header, message, success) => {
+    dispatch(
+      setAlert({
+        show: true,
+        header,
+        message,
+        success,
+      })
+    );
+    setTimeout(() => {
+      dispatch(setAlert({ show: false, header: '', message: '' }));
+    }, 5000);
+  };
+
   const signInWithGoogle = () => {
     signInWithRedirect(auth, provider)
       .then((result) => {
@@ -107,12 +121,15 @@ export const LoginForm = ({ login }) => {
       const userData = await signInWithEmailAndPassword(auth, values.email, values.password);
       const userCol = await getUser(userData.user.uid);
       dispatch(setUser({ ...userCol, uid: userData.user.uid }));
+      notify('Successful', 'Successfully log in', true);
       router.push('/feed');
     } catch (error) {
       console.log(error.message);
       if (error.message.includes('user-not-found')) {
+        notify('Login Error', "Huh huh looks like you don't yet have an account");
         router.push('/signup');
       }
+      notify('Login Error', error.message);
     }
   };
 

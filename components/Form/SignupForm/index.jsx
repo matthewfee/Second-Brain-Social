@@ -10,7 +10,7 @@ import { GenderPicker } from '../../GenderPicker';
 import { GithubExternalSignup, GoogleExternalSignup } from '../ExternalSignup';
 import { TextInput } from '../TextInput';
 import { PasswordInput } from '../PasswordInput';
-import { useStateValue, setUser } from '../../../contexts';
+import { useStateValue, setUser, setAlert } from '../../../contexts';
 import { PROFILE_PICTURE_DEFAULT_URL } from '../../../constants/constants';
 import { auth } from '../../../services/firebase';
 
@@ -21,17 +21,46 @@ export const SignupForm = ({ login }) => {
   const router = useRouter();
 
   const handleSignup = async (values) => {
-    const createdUser = await createUser({
-      email: values.email,
-      password: values.password,
-      firstName: values.firstName,
-      lastName: values.lastName,
-      dateOfBirth: values.dateOfBirth.toString(),
-      gender: values.gender,
-      profilePictureURL: PROFILE_PICTURE_DEFAULT_URL,
-    });
-    dispatch(setUser(createdUser));
-    router.push('/feed');
+    try {
+      const createdUser = await createUser({
+        email: values.email,
+        password: values.password,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        displayName: `${values.firstName} ${values.lasttName}`,
+        dateOfBirth: values.dateOfBirth.toString(),
+        gender: values.gender,
+        profilePictureURL: PROFILE_PICTURE_DEFAULT_URL,
+      });
+      console.log('createdUser: ', createdUser);
+      dispatch(setUser(createdUser));
+      dispatch(
+        setAlert({
+          show: true,
+          header: 'Successful',
+          message: 'Account created successfully',
+          success: true,
+        })
+      );
+      setTimeout(() => {
+        dispatch(setAlert({ show: false, header: '', message: '' }));
+      }, 5000);
+      // router.push('/feed');
+    } catch (error) {
+      if (error.message.includes('email-already-in-use')) {
+        dispatch(
+          setAlert({
+            show: true,
+            header: 'Account Creation Error',
+            message: 'This email is already being used',
+            success: false,
+          })
+        );
+        setTimeout(() => {
+          dispatch(setAlert({ show: false, header: '', message: '' }));
+        }, 5000);
+      }
+    }
   };
 
   const provider = new GoogleAuthProvider();
@@ -39,6 +68,17 @@ export const SignupForm = ({ login }) => {
   const signInWithGoogle = () => {
     signInWithRedirect(auth, provider).catch((error) => {
       console.error(error);
+      dispatch(
+        setAlert({
+          show: true,
+          header: 'Account Creation Error',
+          message: error.message,
+          success: false,
+        })
+      );
+      setTimeout(() => {
+        dispatch(setAlert({ show: false, header: '', message: '' }));
+      }, 5000);
     });
   };
 
