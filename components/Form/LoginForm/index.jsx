@@ -31,14 +31,35 @@ export const LoginForm = ({ login }) => {
 
   const githubProvider = new GithubAuthProvider();
 
+  const notify = (header, message, success) => {
+    dispatch(
+      setAlert({
+        show: true,
+        header,
+        message,
+        success,
+      })
+    );
+    setTimeout(() => {
+      dispatch(setAlert({ show: false, header: '', message: '' }));
+    }, 5000);
+  };
+
   useEffect(() => {
-    onAuthStateChanged(auth, async (currentUser) => {
+    onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        console.log('currentUSER', currentUser);
-        dispatch(setUser(currentUser));
-        const userCol = await getUser(currentUser.user.uid);
-        dispatch(setUser({ ...userCol, uid: currentUser.user.uid }));
-        router.push('/feed');
+        const updateUser = async () => {
+          try {
+            console.log('currentUser.uid: ', currentUser.uid);
+            const userCol = await getUser(currentUser.uid);
+            dispatch(setUser({ ...userCol, uid: currentUser.uid }));
+            router.push('/feed');
+          } catch (error) {
+            console.log('error: ', error);
+            notify('Login Error', error.message, false);
+          }
+        };
+        updateUser();
       } else {
         // console.log('LOGGED OUT');
       }
@@ -71,20 +92,6 @@ export const LoginForm = ({ login }) => {
         // }
       });
   }, [auth]);
-
-  const notify = (header, message, success) => {
-    dispatch(
-      setAlert({
-        show: true,
-        header,
-        message,
-        success,
-      })
-    );
-    setTimeout(() => {
-      dispatch(setAlert({ show: false, header: '', message: '' }));
-    }, 5000);
-  };
 
   const signInWithGoogle = () => {
     signInWithRedirect(auth, provider)

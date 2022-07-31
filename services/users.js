@@ -14,8 +14,7 @@ export const getUser = async (uid) => {
     if (docSnap.exists()) {
       return docSnap.data();
     }
-    // doc.data() will be undefined in this case
-    return { empty: 'User not exist' };
+    throw new Error("User don't exist in collection");
   } catch (error) {
     throw new Error(error);
   }

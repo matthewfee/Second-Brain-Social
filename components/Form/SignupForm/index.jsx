@@ -27,12 +27,11 @@ export const SignupForm = ({ login }) => {
         password: values.password,
         firstName: values.firstName,
         lastName: values.lastName,
-        displayName: `${values.firstName} ${values.lasttName}`,
+        displayName: `${values.firstName} ${values.lastName}`,
         dateOfBirth: values.dateOfBirth.toString(),
         gender: values.gender,
         profilePictureURL: PROFILE_PICTURE_DEFAULT_URL,
       });
-      console.log('createdUser: ', createdUser);
       dispatch(setUser(createdUser));
       dispatch(
         setAlert({
@@ -45,7 +44,7 @@ export const SignupForm = ({ login }) => {
       setTimeout(() => {
         dispatch(setAlert({ show: false, header: '', message: '' }));
       }, 5000);
-      // router.push('/feed');
+      router.push('/feed');
     } catch (error) {
       if (error.message.includes('email-already-in-use')) {
         dispatch(
