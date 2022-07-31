@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useField, useFormikContext } from 'formik';
+import Image from 'next/image';
 import DatePicker from 'react-datepicker';
 
 require('react-datepicker/dist/react-datepicker.css');
