@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useRouter } from 'next/router';
 import { TextInput } from './TextInput';
-import { GoogleExternalSignup, AppleExternalSignup } from './ExternalSignup';
+import { GoogleExternalSignup, GithubExternalSignup } from './ExternalSignup';
 import { Button } from '../Button';
 import { PasswordInput } from './PasswordInput';
 import { DatePickerField } from '../DatePicker';
@@ -13,7 +13,7 @@ export const Form = ({ login, signup }) => {
     <form className="bg-white rounded-lg p-5 min-w-[400px] w-full max-w-xl mx-4 md:mx-auto flex flex-col justify-between gap-5 drop-shadow-xl">
       <div className="signup-with flex justify-between">
         <GoogleExternalSignup login={login} />
-        <AppleExternalSignup login={login} />
+        <GithubExternalSignup login={login} />
       </div>
 
       <div className="relative flex py-2 items-center">
