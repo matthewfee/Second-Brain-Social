@@ -23,7 +23,7 @@ import { auth } from '../../../services/firebase';
 import { useStateValue, setUser, setAlert } from '../../../contexts';
 import { getUser, createUser } from '../../../services/users';
 
-export const LoginForm = ({ login }) => {
+export const LoginForm = () => {
   const { state, dispatch } = useStateValue();
 
   const router = useRouter();
@@ -75,13 +75,9 @@ export const LoginForm = ({ login }) => {
 
         // The signed-in user info.
         const { user } = result;
-
-        console.log('AUTH USER', user);
-
         createUser(user);
       })
       .catch((error) => {
-        console.error(error);
         console.log('FIREBASE ERROR', error);
         // if (
         //   error.email &&
@@ -165,8 +161,8 @@ export const LoginForm = ({ login }) => {
     >
       <Form className="bg-white rounded-lg p-5 min-w-[400px] w-full max-w-xl mx-4 md:mx-auto flex flex-col justify-between gap-5 drop-shadow-xl">
         <div className="signup-with flex justify-between">
-          <GoogleExternalSignup login={login} callback={signInWithGoogle} />
-          <GithubExternalSignup login={login} callback={signInWithGithub} />
+          <GoogleExternalSignup login callback={signInWithGoogle} />
+          <GithubExternalSignup login callback={signInWithGithub} />
         </div>
         {/* <h1>User {state.user?.email}</h1> */}
         <div className="relative flex py-2 items-center">

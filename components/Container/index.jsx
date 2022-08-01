@@ -1,26 +1,15 @@
 // import { langCodes } from '../../constants/constants';
 
-import { onAuthStateChanged } from 'firebase/auth';
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { HEADER_IMAGE_URL } from '../../constants/constants';
-import { auth } from '../../services/firebase';
 import { MyImage } from '../MyImage';
 import { useStateValue } from '../../contexts';
 
 export const Container = ({ children }) => {
-  const [user, setUser] = useState({ email: '' });
   const { state } = useStateValue();
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-  }, []);
 
   let isLoggedIn = false;
 
-  if (auth.currentUser !== null) {
+  if (state.user !== undefined) {
     isLoggedIn = true;
   }
 
@@ -54,10 +43,15 @@ export const Container = ({ children }) => {
         {isLoggedIn && (
           <div className="login-info-container flex">
             <div className="user-name-container pr-5 text-lg font-medium flex items-center">
-              {user?.displayName ? user?.displayName : 'User'}
+              {state.user?.displayName ? state.user?.displayName : 'User'}
             </div>
             <div className="pl-5 pr-8 rounded-xl overflow-hidden h-12 w-12 relative cursor-pointer ">
-              <MyImage src={HEADER_IMAGE_URL} width={60} height={60} alt="Profile picture" />
+              <MyImage
+                src={state.user.profilePictureURL}
+                width={60}
+                height={60}
+                alt="Profile picture"
+              />
             </div>
           </div>
         )}

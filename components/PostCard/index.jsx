@@ -6,8 +6,9 @@ import { PostReactions } from './PostReactions';
 import { PostComments } from './PostComments';
 import { useStateValue } from '../../contexts';
 import { Comments } from './Comments';
+import { PostMenu } from './PostMenu';
 
-export const PostCard = ({ post, fetchPosts }) => {
+export const PostCard = ({ post, fetchPosts, displayPostSubMenu, setdisplayPostSubMenu }) => {
   const { state } = useStateValue();
   const [showComments, setShowComments] = useState(false);
 
@@ -15,6 +16,9 @@ export const PostCard = ({ post, fetchPosts }) => {
     console.log('TOGGLE SHOW COMMENTS');
     setShowComments((prevState) => !prevState);
   };
+  const showSubMenu = displayPostSubMenu.find(
+    (subMenuState) => subMenuState.id === post.postId
+  ).show;
 
   return (
     <div
@@ -25,11 +29,16 @@ export const PostCard = ({ post, fetchPosts }) => {
     w-full max-w-[512px]
     h-auto text-gray-600"
     >
-      <PostHeader
-        headerImageSRC={post.user.profilePictureURL}
-        date={post?.createdDate}
-        post={post}
-      />
+      <div className="relative">
+        <PostHeader
+          headerImageSRC={post.user.profilePictureURL}
+          date={post?.createdDate}
+          post={post}
+          setdisplayPostSubMenu={setdisplayPostSubMenu}
+          displayPostSubMenu={displayPostSubMenu}
+        />
+        {showSubMenu ? <PostMenu post={post} fetchPosts={fetchPosts} /> : null}
+      </div>
       <p className="text-gray-600">{post.text}</p>
       <div className="flex gap-1">
         {post?.images?.length >= 1 &&
