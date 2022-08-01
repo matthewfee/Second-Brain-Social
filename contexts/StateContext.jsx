@@ -2,7 +2,7 @@ import { createContext, useContext, useReducer } from 'react';
 import { reducer } from './reducer';
 
 const initialState = {
-  user: { name: 'Anonymous', isAuthenticated: false },
+  user: undefined,
   modal: { show: false, content: '' },
   alert: { show: false, header: '', message: '', success: false },
 };

@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, addDoc, doc, deleteDoc, onSnapshot, setDoc, getDoc } from 'firebase/firestore';
 import { db, auth } from './firebase';
+import { PROFILE_PICTURE_DEFAULT_URL } from '../constants/constants';
 
 // collection ref
 const usersColRef = collection(db, 'users');
@@ -46,8 +47,8 @@ export const createUser = async (user) => {
     lastName: user?.lastName || null,
     dateOfBirth: user?.dateOfBirth || null,
     gender: user?.gender || null,
-    profilePictureURL: user?.profilePictureURL || null,
     email: user?.email || null,
+    profilePictureURL: PROFILE_PICTURE_DEFAULT_URL,
   };
 
   if (user.email && user.password) {
@@ -60,7 +61,11 @@ export const createUser = async (user) => {
     }
   } else {
     // this is for github and google signin, so user is created in collection
-    await setDoc(doc(db, 'users', user.uid), userToSave);
+    console.log('user in else: ', { ...user, profilePictureURL: PROFILE_PICTURE_DEFAULT_URL });
+    await setDoc(doc(db, 'users', user.uid), {
+      ...user,
+      profilePictureURL: PROFILE_PICTURE_DEFAULT_URL,
+    });
   }
 };
 

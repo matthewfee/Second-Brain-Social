@@ -55,13 +55,12 @@ export const addPost = async (newPost, images) => {
 
 // get collection data
 export const deletePost = async (postID) => {
-  const docRef = doc(db, 'posts', postID.value);
+  const docRef = doc(db, 'posts', postID);
   try {
-    const deletedPost = await deleteDoc(docRef);
-    console.log(deletedPost);
+    await deleteDoc(docRef);
     //   return deletedPost;
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 };
 

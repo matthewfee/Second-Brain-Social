@@ -18,7 +18,7 @@ export const CreatePost = ({ fetchPosts }) => {
     emotion: '',
     userLikes: [],
     comments: [],
-    displayName: state.user.displayName || '',
+    displayName: '',
   });
 
   console.log('state: ', state);

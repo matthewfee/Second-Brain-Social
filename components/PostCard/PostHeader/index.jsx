@@ -3,7 +3,13 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { PostProfileImage } from '../PostProfileImage';
 
-export const PostHeader = ({ headerImageSRC, date, post }) => {
+export const PostHeader = ({
+  headerImageSRC,
+  date,
+  post,
+  setdisplayPostSubMenu,
+  displayPostSubMenu,
+}) => {
   let dateTime = null;
   // eslint-disable-next-line no-unused-vars
   const [svgSource, setSvgSource] = useState('/icons/threeDots.svg');
@@ -11,6 +17,16 @@ export const PostHeader = ({ headerImageSRC, date, post }) => {
   if (date) {
     dateTime = date.toDate().toDateString();
   }
+
+  const handleDisplaySubMenu = () => {
+    const newSubMenuState = displayPostSubMenu.map((postSubMenu) => {
+      if (postSubMenu.id === post.postId) {
+        return { ...postSubMenu, show: !postSubMenu.show };
+      }
+      return { ...postSubMenu, show: false };
+    });
+    setdisplayPostSubMenu(newSubMenuState);
+  };
 
   return (
     <div className="flex justify-between items-center">
@@ -26,7 +42,14 @@ export const PostHeader = ({ headerImageSRC, date, post }) => {
         onMouseEnter={() => setSvgSource('/icons/blueThreeDots.svg')}
         onMouseLeave={() => setSvgSource('/icons/threeDots.svg')}
       >
-        <Image src={svgSource} width={20} height={20} alt="menu" className=" " />
+        <Image
+          src={svgSource}
+          width={20}
+          height={20}
+          alt="menu"
+          className=" "
+          onClick={handleDisplaySubMenu}
+        />
       </div>
     </div>
   );

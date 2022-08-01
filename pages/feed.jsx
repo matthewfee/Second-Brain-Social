@@ -3,31 +3,63 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { SyncLoader } from 'react-spinners';
 import { CreatePost, PostCard, Sidebar, FriendsList } from '../components';
-import { useStateValue, setUser } from '../contexts';
+import { useStateValue, setUser, setAlert } from '../contexts';
 import { auth } from '../services/firebase';
-import { getPosts } from '../services/posts';
+import { getPosts, getUser } from '../services';
 
 const Feed = () => {
   // eslint-disable-next-line no-unused-vars
   const { state, dispatch } = useStateValue();
   const [posts, setPosts] = useState();
+  // used to display sub menu when post threeDots is clicked
+  const [displayPostSubMenu, setdisplayPostSubMenu] = useState([]);
 
   const router = useRouter();
 
   const fetchPosts = async () => {
-    console.log('FETCHING POSTS');
     const receivedPosts = await getPosts();
     const receivedPostsSortedByRecentDate = receivedPosts.sort(
       (a, b) => b.createdDate - a.createdDate
     );
-    console.log('receivedPostsSortedByRecentDate: ', receivedPostsSortedByRecentDate);
+    setdisplayPostSubMenu(receivedPosts.map((post) => ({ id: post.postId, show: false })));
     setPosts(receivedPostsSortedByRecentDate);
   };
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        dispatch(setUser(currentUser));
+        const updateUser = async () => {
+          try {
+            const userCol = await getUser(currentUser.uid);
+            dispatch(setUser({ ...userCol, uid: currentUser.uid }));
+            dispatch(
+              setAlert({
+                show: true,
+                header: 'Successfull',
+                message: `Welcome ${userCol.displayName}`,
+                success: true,
+              })
+            );
+            setTimeout(() => {
+              dispatch(setAlert({ show: false, header: '', message: '' }));
+            }, 5000);
+            router.push('/feed');
+          } catch (error) {
+            console.log('error: ', error);
+            dispatch(
+              setAlert({
+                show: true,
+                header: 'Error',
+                message: error.message,
+                success: false,
+              })
+            );
+            setTimeout(() => {
+              dispatch(setAlert({ show: false, header: '', message: '' }));
+            }, 5000);
+          }
+        };
+        updateUser();
       } else {
         router.push('/login');
       }
@@ -46,9 +78,14 @@ const Feed = () => {
       <div className="post-content-container flex flex-col items-center w-full lg:w-3/5 mx-4 lg:ml-4 lg:mr-8 lg:pb-8 bg-gray-200 rounded-xl">
         <CreatePost fetchPosts={fetchPosts} />
         {posts ? (
-          posts.map((post, i) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <PostCard key={i} post={post} fetchPosts={fetchPosts} />
+          posts.map((post) => (
+            <PostCard
+              key={post.postId}
+              post={post}
+              fetchPosts={fetchPosts}
+              displayPostSubMenu={displayPostSubMenu}
+              setdisplayPostSubMenu={setdisplayPostSubMenu}
+            />
           ))
         ) : (
           <SyncLoader className="mt-24" />

@@ -2,7 +2,7 @@
 import { useRouter } from 'next/router';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-import { signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
+import { signInWithRedirect, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { createUser } from '../../../services/users';
 import { Button } from '../../Button';
 import { DatePickerField } from '../../DatePicker';
@@ -11,10 +11,9 @@ import { GithubExternalSignup, GoogleExternalSignup } from '../ExternalSignup';
 import { TextInput } from '../TextInput';
 import { PasswordInput } from '../PasswordInput';
 import { useStateValue, setUser, setAlert } from '../../../contexts';
-import { PROFILE_PICTURE_DEFAULT_URL } from '../../../constants/constants';
 import { auth } from '../../../services/firebase';
 
-export const SignupForm = ({ login }) => {
+export const SignupForm = () => {
   // eslint-disable-next-line no-unused-vars
   const { state, dispatch } = useStateValue();
 
@@ -30,7 +29,6 @@ export const SignupForm = ({ login }) => {
         displayName: `${values.firstName} ${values.lastName}`,
         dateOfBirth: values.dateOfBirth.toString(),
         gender: values.gender,
-        profilePictureURL: PROFILE_PICTURE_DEFAULT_URL,
       });
       dispatch(setUser(createdUser));
       dispatch(
@@ -65,20 +63,48 @@ export const SignupForm = ({ login }) => {
   const provider = new GoogleAuthProvider();
 
   const signInWithGoogle = () => {
-    signInWithRedirect(auth, provider).catch((error) => {
-      console.error(error);
-      dispatch(
-        setAlert({
-          show: true,
-          header: 'Account Creation Error',
-          message: error.message,
-          success: false,
-        })
-      );
-      setTimeout(() => {
-        dispatch(setAlert({ show: false, header: '', message: '' }));
-      }, 5000);
-    });
+    // signInWithRedirect(auth, provider)
+    //   .then((savedUser) => {
+    //     console.log('savedUser: ', savedUser);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //     dispatch(
+    //       setAlert({
+    //         show: true,
+    //         header: 'Account Creation Error',
+    //         message: error.message,
+    //         success: false,
+    //       })
+    //     );
+    //     setTimeout(() => {
+    //       dispatch(setAlert({ show: false, header: '', message: '' }));
+    //     }, 5000);
+    //   });
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const { user } = result;
+        console.log('user: ', user);
+        const createdUser = createUser({
+          firstName: user.displayName.split(' ')[0],
+          lastName: user.displayName.split(' ')[1],
+          displayName: user.displayName,
+          uid: user.uid,
+        });
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const { email } = error.customData;
+        console.log('email of error: ', email);
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
   };
 
   const initialValues = {
@@ -120,8 +146,8 @@ export const SignupForm = ({ login }) => {
     >
       <Form className="bg-white rounded-lg p-5 min-w-[400px] w-full max-w-xl mx-4 md:mx-auto flex flex-col justify-between gap-5 drop-shadow-xl">
         <div className="signup-with flex justify-between">
-          <GoogleExternalSignup login={login} callback={signInWithGoogle} />
-          <GithubExternalSignup login={login} />
+          <GoogleExternalSignup login={false} callback={signInWithGoogle} />
+          <GithubExternalSignup login={false} />
         </div>
         <div className="relative flex py-2 items-center">
           <div className="flex-grow border-t border-gray-300" />
