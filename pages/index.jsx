@@ -10,7 +10,7 @@ const Home = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!state.user.isAuthenticated) {
+    if (!state.user) {
       router.push('/login');
     }
   }, []);
