@@ -35,11 +35,17 @@ export const getUsers = async () => {
 
 // create a user
 export const createUser = async (user) => {
-  // const userDoc = await getUser(user.uid);
+  // checks if user already exists
+  try {
+    const userDoc = await getUser(user?.uid);
 
-  // if (userDoc) {
-  //   return;
-  // }
+    if (userDoc) {
+      console.log('USER ALREADY EXISTS', userDoc);
+      return userDoc;
+    }
+  } catch (error) {
+    console.log('USER NOT FOUND IN COLLECTION');
+  }
 
   const userToSave = {
     displayName: user?.displayName || null,
@@ -51,22 +57,29 @@ export const createUser = async (user) => {
     profilePictureURL: PROFILE_PICTURE_DEFAULT_URL,
   };
 
+  console.log('USER TO SAVE', userToSave);
+
+  // if user has an email and password created on signup page, creates user with email and password
+
   if (user.email && user.password) {
+    console.log('CREATING USER WITH EMAIL AND PASSWORD');
     try {
       const userData = await createUserWithEmailAndPassword(auth, user.email, user.password);
 
       await setDoc(doc(db, 'users', userData.user.uid), userToSave);
+      return userToSave;
     } catch (error) {
       throw new Error(error);
     }
-  } else {
-    // this is for github and google signin, so user is created in collection
-    console.log('user in else: ', { ...user, profilePictureURL: PROFILE_PICTURE_DEFAULT_URL });
-    await setDoc(doc(db, 'users', user.uid), {
-      ...user,
-      profilePictureURL: PROFILE_PICTURE_DEFAULT_URL,
-    });
   }
+
+  // this is for github and google signin, so user is created in collection
+
+  await setDoc(doc(db, 'users', user.uid), {
+    ...userToSave,
+  });
+
+  return userToSave;
 };
 
 // get collection data

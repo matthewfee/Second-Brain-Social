@@ -47,6 +47,7 @@ export const LoginForm = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
+      console.log('UPDATING USER ON AUTH STATE CHANGED');
       if (currentUser) {
         const updateUser = async () => {
           try {
@@ -75,6 +76,7 @@ export const LoginForm = () => {
 
         // The signed-in user info.
         const { user } = result;
+        console.log('GET REDIRECT RESULT', user);
         createUser(user);
       })
       .catch((error) => {
@@ -96,8 +98,8 @@ export const LoginForm = () => {
         // const credential = GoogleAuthProvider.credentialFromResult(result);
         // const token = credential.accessToken;
         // The signed-in user info.
-        // const { user } = result;
-        // console.log('AUTH USER', user);
+        const { user } = result;
+        console.log('AUTH USER SIGNINWITHGOOGLE', user);
         // createUser(user);
       })
       .catch((error) => {
