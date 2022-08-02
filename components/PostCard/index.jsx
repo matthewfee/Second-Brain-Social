@@ -36,6 +36,8 @@ export const PostCard = ({ post, fetchPosts, displayPostSubMenu, setdisplayPostS
           post={post}
           setdisplayPostSubMenu={setdisplayPostSubMenu}
           displayPostSubMenu={displayPostSubMenu}
+          userID={state.user.uid}
+          postID={post.user.uid}
         />
         {showSubMenu ? <PostMenu post={post} fetchPosts={fetchPosts} /> : null}
       </div>
