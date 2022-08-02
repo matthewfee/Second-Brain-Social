@@ -32,10 +32,9 @@ export const PostHeader = ({
 
   const userIsPostAuthor = userID === postID;
 
-
   return (
     <div className="flex justify-between items-center">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 rounded-full">
         {headerImageSRC && <PostProfileImage imageSRC={headerImageSRC} />}
         <div className="text-xl">
           <p className="text-sm">{post?.user.displayName}</p>

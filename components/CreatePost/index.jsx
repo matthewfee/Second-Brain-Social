@@ -7,7 +7,6 @@ import { PostInput } from '../PostInput';
 import { PreviewImage } from './PreviewImage';
 import { useStateValue, setModal } from '../../contexts';
 import { Modal } from '../Modal';
-import { HEADER_IMAGE_URL } from '../../constants/constants';
 
 export const CreatePost = ({ fetchPosts }) => {
   const { state } = useStateValue();
@@ -166,7 +165,7 @@ export const CreatePost = ({ fetchPosts }) => {
           </div>
           <hr className="border border-gray-300" />
           <div className="flex justify-between">
-            <PostProfileImage imageSRC={HEADER_IMAGE_URL} />
+            <PostProfileImage imageSRC={state?.user?.profilePictureURL} />
             <PostInput text={newPost.text} inputChange={handleTextChange} onKeyUp={handleKeyUp} />
           </div>
           <div className="flex gap-2">
@@ -264,7 +263,7 @@ export const CreatePost = ({ fetchPosts }) => {
     h-auto text-gray-600 my-0"
     >
       <div className="flex justify-between items-center">
-        <PostProfileImage imageSRC={HEADER_IMAGE_URL} />
+        <PostProfileImage imageSRC={state.user.profilePictureURL} />
         <PostInput
           size="small"
           text={newPost?.text}
