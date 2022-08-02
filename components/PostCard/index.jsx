@@ -13,7 +13,6 @@ export const PostCard = ({ post, fetchPosts, displayPostSubMenu, setdisplayPostS
   const [showComments, setShowComments] = useState(false);
 
   const toggleShowComments = () => {
-    console.log('TOGGLE SHOW COMMENTS');
     setShowComments((prevState) => !prevState);
   };
   const showSubMenu = displayPostSubMenu.find(

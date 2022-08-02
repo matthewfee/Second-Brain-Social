@@ -32,7 +32,6 @@ export const PostHeader = ({
 
   const userIsPostAuthor = userID === postID;
 
-  console.log('USER ID', userID, 'POST', post);
 
   return (
     <div className="flex justify-between items-center">

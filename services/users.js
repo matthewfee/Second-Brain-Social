@@ -40,7 +40,6 @@ export const createUser = async (user) => {
     const userDoc = await getUser(user?.uid);
 
     if (userDoc) {
-      console.log('USER ALREADY EXISTS', userDoc);
       return userDoc;
     }
   } catch (error) {
@@ -57,12 +56,9 @@ export const createUser = async (user) => {
     profilePictureURL: PROFILE_PICTURE_DEFAULT_URL,
   };
 
-  console.log('USER TO SAVE', userToSave);
-
   // if user has an email and password created on signup page, creates user with email and password
 
   if (user.email && user.password) {
-    console.log('CREATING USER WITH EMAIL AND PASSWORD');
     try {
       const userData = await createUserWithEmailAndPassword(auth, user.email, user.password);
 
@@ -86,7 +82,6 @@ export const createUser = async (user) => {
 export const addUser = async (newUser) => {
   try {
     const addedUser = await addDoc(usersColRef, newUser);
-    console.log(addedUser);
     return addedUser;
   } catch (error) {
     console.log(error);
@@ -98,9 +93,7 @@ export const addUser = async (newUser) => {
 export const deleteUser = async (userID) => {
   const docRef = doc(db, 'users', userID.value);
   try {
-    const deletedUser = await deleteDoc(docRef);
-    console.log(deletedUser);
-    //   return deletedPost;
+    await deleteDoc(docRef);
   } catch (error) {
     console.log(error);
   }
