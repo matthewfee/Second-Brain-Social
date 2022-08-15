@@ -1,14 +1,17 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
+import _uniqueId from 'lodash/uniqueId';
 import { PostComment } from '../PostComment';
 import { PostProfileImage } from '../PostProfileImage';
 import { commentPost } from '../../../services/posts';
 
 export const PostComments = ({ postId, user, fetchPosts }) => {
   const [commentText, setCommentText] = useState('');
+  const [commentId] = useState(_uniqueId('prefix-'));
 
   const sendComment = async () => {
     setCommentText('');
-    await commentPost(commentText, postId, user.uid);
+    await commentPost(commentText, postId, user.uid, commentId);
     fetchPosts();
   };
 
