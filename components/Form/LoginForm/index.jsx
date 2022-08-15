@@ -51,12 +51,10 @@ export const LoginForm = () => {
       if (currentUser) {
         const updateUser = async () => {
           try {
-            console.log('currentUser.uid: ', currentUser.uid);
             const userCol = await getUser(currentUser.uid);
             dispatch(setUser({ ...userCol, uid: currentUser.uid }));
             router.push('/feed');
           } catch (error) {
-            console.log('error: ', error);
             notify('Login Error', error.message, false);
           }
         };

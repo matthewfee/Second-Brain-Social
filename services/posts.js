@@ -93,7 +93,7 @@ export const likePost = async (post, userID) => {
   console.log('No post found');
 };
 
-export const commentPost = async (commentText, postId, userId) => {
+export const commentPost = async (commentText, postId, userId, commentId) => {
   const docRef = doc(db, 'posts', postId);
   const docSnap = await getDoc(docRef);
 
@@ -104,13 +104,28 @@ export const commentPost = async (commentText, postId, userId) => {
 
     let { comments } = data;
     if (comments) {
-      comments.push({ comment: commentText, userId, commentDate });
+      comments.push({ comment: commentText, userId, commentDate, commentId });
     } else {
-      comments = [{ comment: commentText, userId, commentDate }];
+      comments = [{ comment: commentText, userId, commentDate, commentId }];
     }
 
     await updateDoc(docRef, {
       comments,
+    });
+  }
+};
+
+export const deleteCommentFromPost = async (updatedComments, postId) => {
+  const docRef = doc(db, 'posts', postId);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+
+    console.log('data: ', data);
+
+    await updateDoc(docRef, {
+      comments: updatedComments,
     });
   }
 };

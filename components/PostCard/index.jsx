@@ -56,7 +56,9 @@ export const PostCard = ({ post, fetchPosts, displayPostSubMenu, setdisplayPostS
         fetchPosts={fetchPosts}
       />
       <PostComments postId={post.postId} user={state.user} fetchPosts={fetchPosts} />
-      {post.comments && showComments && <Comments comments={post.comments} />}
+      {post.comments && showComments && (
+        <Comments comments={post.comments} postId={post.postId} fetchPosts={fetchPosts} />
+      )}
     </div>
   );
 };

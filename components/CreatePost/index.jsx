@@ -68,7 +68,6 @@ export const CreatePost = ({ fetchPosts }) => {
 
   const handlePost = async () => {
     if (state.user) {
-      console.log('state.user: ', state.user);
       const date = new Date();
       const post = {
         ...newPost,
