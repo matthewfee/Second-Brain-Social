@@ -29,6 +29,8 @@ export const Comment = ({ comment, handleDeleteComment }) => {
     commentTime = comment.commentDate.toDate().toDateString();
   }
 
+  console.log('userThatCommented: ', userThatCommented);
+
   return (
     <div className="flex gap-6 mx-2 my-4">
       {userThatCommented !== undefined ? (
@@ -46,7 +48,7 @@ export const Comment = ({ comment, handleDeleteComment }) => {
             onMouseLeave={() => setShowDeleteIcon(false)}
           >
             <div className="">
-              <div className="font-bold">{userThatCommented.name}</div>
+              <div className="font-bold">{userThatCommented.displayName}</div>
               <div className="text-gray-400 text-xs -mt-1">{commentTime}</div>
               <div className="mt-2 text-sm">{comment.comment}</div>
             </div>
