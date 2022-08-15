@@ -29,8 +29,6 @@ export const Comment = ({ comment, handleDeleteComment }) => {
     commentTime = comment.commentDate.toDate().toDateString();
   }
 
-  console.log('userThatCommented: ', userThatCommented);
-
   return (
     <div className="flex gap-6 mx-2 my-4">
       {userThatCommented !== undefined ? (
